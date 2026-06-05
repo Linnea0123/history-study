@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-    <title>研学录 · 经典文库</title>
+    <title>研学录 · 历史文库</title>
     <!-- Quill 富文本 -->
     <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
     <script src="https://cdn.quilljs.com/1.3.7/quill.js"></script>
     <style>
-        
         * {
             margin: 0;
             padding: 0;
@@ -143,7 +142,6 @@
             user-select: none;
         }
 
-        /* 一级目录：无缩进 */
         .level-1 {
             font-size: 15px;
             font-weight: 500;
@@ -157,7 +155,6 @@
             border-radius: 8px;
         }
 
-        /* 二级目录：缩进一格 (16px) */
         .level-2 {
             font-size: 14px;
             font-weight: 450;
@@ -171,12 +168,11 @@
             border-radius: 8px;
         }
 
-        /* 三级目录：缩进两格 (32px) */
         .level-3 {
             font-size: 14px;
             font-weight: 400;
             padding: 8px 12px;
-            margin-left: 32px;
+            margin-left: 50px;
             background: transparent;
             cursor: pointer;
             display: flex;
@@ -199,16 +195,16 @@
             flex: 1;
         }
 
-     .chevron {
-    font-size: 16px;        /* 12px → 16px */
-    font-weight: 500;       /* 稍微加粗，更醒目 */
-    color: #8e8e93;
-    transition: transform 0.2s;
-    margin-right: 10px;
-    width: 22px;            /* 16px → 22px */
-    display: inline-block;
-    text-align: center;
-}
+        .chevron {
+            font-size: 16px;
+            font-weight: 500;
+            color: #8e8e93;
+            transition: transform 0.2s;
+            margin-right: 10px;
+            width: 22px;
+            display: inline-block;
+            text-align: center;
+        }
         .chevron.open {
             transform: rotate(90deg);
         }
@@ -231,34 +227,25 @@
             text-align: center;
         }
 
-       
-.records-header {
-    display: flex;
-    justify-content: flex-end;   /* 按钮右对齐 */
-    align-items: center;
-    margin-bottom: 8px;
-    padding: 0;
-    min-height: 32px;
-}
+        .records-header {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            margin-bottom: 8px;
+            padding: 0;
+            min-height: 32px;
+        }
 
-.btn-add-record {
-    background: #61A2DA;
-    border: none;
-    padding: 4px 12px;
-    border-radius: 6px;
-    font-weight: 500;
-    font-size: 12px;
-    color: white;
-    cursor: pointer;
-}
-
-.section-title {
-    font-size: 13px;
-    font-weight: 600;
-    color: #1c1c1e;
-    line-height: 1;
-}
-
+        .btn-add-record {
+            background: #61A2DA;
+            border: none;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 12px;
+            color: white;
+            cursor: pointer;
+        }
 
         .records-list {
             display: flex;
@@ -276,7 +263,7 @@
         .record-header {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
+            align-items: center;
             margin-bottom: 10px;
         }
         .record-title {
@@ -301,35 +288,8 @@
             margin-bottom: 12px;
             color: #1c1c1e;
         }
-        .original-text {
-    font-size: 18px;
-    font-weight: 500;
-    color: #1c1c1e;
-    line-height: 1.8;
-}
         .gray-text {
             color: #8e8e93;
-        }
-        .notes-section {
-            margin-top: 16px;
-        }
-        .record-actions {
-            display: flex;
-            gap: 16px;
-            justify-content: flex-end;
-            margin-top: 12px;
-        }
-        .edit-btn, .delete-btn {
-            background: none;
-            border: none;
-            font-size: 14px;
-            cursor: pointer;
-            padding: 4px 12px;
-            border-radius: 6px;
-            color: #61A2DA;
-        }
-        .delete-btn {
-            color: #ff3b30;
         }
         .empty-msg {
             text-align: center;
@@ -466,8 +426,6 @@
         }
         .action-btn:hover { background: #e5e5ea; }
         .action-btn.delete-item { color: #ff3b30; font-size: 18px; font-weight: 400; }
-        .action-btn.delete-item:hover { background: #ffe5e5; }
-        .action-btn.edit-item svg { width: 14px; height: 14px; fill: #8e8e93; }
         .add-root-input { display: flex; gap: 8px; margin-top: 12px; }
         .add-root-input input { flex: 1; padding: 8px 12px; border: 0.5px solid #e5e5ea; border-radius: 8px; font-size: 14px; }
         .add-root-input button { background: #61A2DA; border: none; padding: 8px 16px; border-radius: 8px; color: white; cursor: pointer; }
@@ -505,189 +463,207 @@
             .sidebar { border-right: none; border-bottom: 0.5px solid #e5e5ea; }
         }
 
-        /* ========== 字号样式 ========== */
-.ql-editor .ql-size-12px { font-size: 12px !important; }
-.ql-editor .ql-size-14px { font-size: 14px !important; }
-.ql-editor .ql-size-16px { font-size: 16px !important; }
-.ql-editor .ql-size-18px { font-size: 18px !important; }
-.ql-editor .ql-size-20px { font-size: 20px !important; }
-.ql-editor .ql-size-24px { font-size: 24px !important; }
-.ql-editor .ql-size-28px { font-size: 28px !important; }
-.ql-editor .ql-size-32px { font-size: 32px !important; }
+        .ql-editor { font-size: 14px; line-height: 1.6; }
+        .original-box {
+            cursor: pointer;
+            transition: background 0.1s;
+            border-radius: 8px;
+            padding: 4px;
+            margin: -4px;
+        }
+        .collapsible-box {
+            margin: 8px 0;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #ffffff;
+        }
+        .collapsible-header {
+            padding: 10px 16px;
+            background: #f6f6f9;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #61A2DA;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            user-select: none;
+        }
+        .collapsible-header:hover { background: #efeff4; }
+        .collapse-arrow {
+            font-size: 10px;
+            transition: transform 0.2s;
+            color: #8e8e93;
+        }
+        .collapsible-content {
+            padding: 12px 16px;
+            display: block;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .record-header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .delete-icon {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            color: #8e8e93;
+            padding: 0 4px;
+        }
 
-
-/* ========== 行距样式 - 通过 CSS 类生效 ========== */
-.ql-editor .ql-line-height-lh12 { line-height: 1.2 !important; }
-.ql-editor .ql-line-height-lh14 { line-height: 1.4 !important; }
-.ql-editor .ql-line-height-lh16 { line-height: 1.6 !important; }
-.ql-editor .ql-line-height-lh18 { line-height: 1.8 !important; }
-.ql-editor .ql-line-height-lh20 { line-height: 2.0 !important; }
-.ql-editor .ql-line-height-lh25 { line-height: 2.5 !important; }
-
-/* ========== 行距下拉菜单样式 ========== */
-.ql-picker.ql-line-height {
-    width: 75px !important;
-}
-.ql-picker.ql-line-height .ql-picker-label {
-    padding-right: 22px !important;
-}
-.ql-picker.ql-line-height .ql-picker-label::after {
-    right: 6px !important;
-}
-.ql-picker.ql-line-height .ql-picker-label::before {
-    content: attr(data-value);
-}
-.ql-picker.ql-line-height .ql-picker-item::before {
-    content: attr(data-value);
-}
-
-/* 默认样式 */
-.ql-editor { font-size: 14px; line-height: 1.6; }
-/* ========== 下拉菜单显示 ========== */
-.ql-picker.ql-size .ql-picker-label[data-value="12px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="12px"]::before { content: '12px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="14px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="14px"]::before { content: '14px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="16px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="16px"]::before { content: '16px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="18px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="18px"]::before { content: '18px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="20px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="20px"]::before { content: '20px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="24px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="24px"]::before { content: '24px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="28px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="28px"]::before { content: '28px'; }
-.ql-picker.ql-size .ql-picker-label[data-value="32px"]::before,
-.ql-picker.ql-size .ql-picker-item[data-value="32px"]::before { content: '32px'; }
-
-.ql-picker.ql-line-height .ql-picker-label::before,
-.ql-picker.ql-line-height .ql-picker-item::before {
-    content: attr(data-value);
-}
-
-/* 默认样式 */
-.ql-editor { font-size: 14px; line-height: 1.6; }
-
-
-
-/* ========== 主界面笔记显示的行距样式 ========== */
-.record-full-content [style*="line-height: 1.2"] { line-height: 1.2 !important; }
-.record-full-content [style*="line-height: 1.4"] { line-height: 1.4 !important; }
-.record-full-content [style*="line-height: 1.6"] { line-height: 1.6 !important; }
-.record-full-content [style*="line-height: 1.8"] { line-height: 1.8 !important; }
-.record-full-content [style*="line-height: 2.0"] { line-height: 2.0 !important; }
-.record-full-content [style*="line-height: 2.5"] { line-height: 2.5 !important; }
-
-/* Quill 编辑器的行距类样式（主界面也支持） */
-.ql-line-height-lh12, .ql-editor .ql-line-height-lh12 { line-height: 1.2 !important; }
-.ql-line-height-lh14, .ql-editor .ql-line-height-lh14 { line-height: 1.4 !important; }
-.ql-line-height-lh16, .ql-editor .ql-line-height-lh16 { line-height: 1.6 !important; }
-.ql-line-height-lh18, .ql-editor .ql-line-height-lh18 { line-height: 1.8 !important; }
-.ql-line-height-lh20, .ql-editor .ql-line-height-lh20 { line-height: 2.0 !important; }
-.ql-line-height-lh25, .ql-editor .ql-line-height-lh25 { line-height: 2.5 !important; }
-
-/* 通用行距样式 */
-.record-full-content .full-text {
-    line-height: inherit;
-}
-
-
-/* ========== 可收缩展开框样式 ========== */
-.collapsible-box {
-    margin: 8px 0;
-    border: 1px solid #e5e5ea;
-    border-radius: 12px;
-    overflow: hidden;
-    background: #ffffff;
-}
-
-.collapsible-header {
-    padding: 10px 16px;
-    background: #f6f6f9;
-    cursor: pointer;
+        .related-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e9e9ef;
+    padding: 4px 10px;
+    border-radius: 20px;
     font-size: 13px;
-    font-weight: 500;
     color: #61A2DA;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    user-select: none;
-}
-
-.collapsible-header:hover {
-    background: #efeff4;
-}
-
-.collapse-arrow {
-    font-size: 10px;
-    transition: transform 0.2s;
-    color: #8e8e93;
-}
-
-.collapsible-content {
-    padding: 12px 16px;
-    display: block;
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-/* 滚动条样式 */
-.collapsible-content::-webkit-scrollbar {
-    width: 6px;
-}
-
-.collapsible-content::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-}
-
-.collapsible-content::-webkit-scrollbar-thumb {
-    background: #c1c1c1;
-    border-radius: 3px;
-}
-
-.collapsible-content .full-text {
-    margin-bottom: 0;
-}
-
-/* 记录卡片头部 - 日期和删除按钮同行 */
-.record-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.record-header-right {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.delete-icon {
-    background: none;
-    border: none;
     cursor: pointer;
-    font-size: 18px;
-    color: #8e8e93;
-    padding: 0 4px;
     transition: all 0.2s;
 }
-
-
-
-/* 原文可点击编辑样式 */
-.original-box {
+.related-tag:hover {
+    background: #61A2DA;
+    color: white;
+}
+.related-tag .remove-tag {
     cursor: pointer;
-    transition: background 0.1s;
-    border-radius: 8px;
-    padding: 4px;
-    margin: -4px;
+    font-size: 14px;
+    color: #8e8e93;
+    margin-left: 6px;
+}
+.related-tag:hover .remove-tag {
+    color: white;
 }
 
+/* 时代线标签样式 */
+.timeline-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e9e9ef;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: #61A2DA;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.timeline-tag:hover {
+    background: #61A2DA;
+    color: white;
+}
+.timeline-tag .remove-timeline {
+    cursor: pointer;
+    font-size: 14px;
+    color: #8e8e93;
+    margin-left: 6px;
+}
+.timeline-tag:hover .remove-timeline {
+    color: white;
+}
 
+/* 主界面时代线横线样式 */
+.timeline-horizontal {
+    margin: 16px 0 8px 0;
+    padding: 16px 0;
+    background: #f9f9fb;
+    border-radius: 12px;
+    overflow-x: auto;
+}
+.timeline-horizontal-title {
+    font-size: 12px;
+    font-weight: 500;
+    color: #8e8e93;
+    margin-bottom: 12px;
+    padding: 0 16px;
+}
+.timeline-track {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    min-width: 300px;
+    padding: 0 16px;
+}
+.timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 50px;
+    right: 50px;
+    height: 2px;
+    background: #c6c6c8;
+    transform: translateY(-50%);
+    z-index: 0;
+}
+.timeline-node {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+.timeline-dot {
+    width: 10px;
+    height: 10px;
+    background: #61A2DA;
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 6px;
+}
+.timeline-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #1c1c1e;
+    white-space: nowrap;
+    background: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+.timeline-node:hover .timeline-label {
+    background: #61A2DA;
+    color: white;
+}
+.timeline-node:hover .timeline-dot {
+    background: #ff9500;
+    transform: scale(1.2);
+}
 
+/* 相关事件标签样式 */
+.event-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #e9e9ef;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    color: #61A2DA;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.event-tag:hover {
+    background: #61A2DA;
+    color: white;
+}
+.event-tag .remove-event {
+    cursor: pointer;
+    font-size: 14px;
+    color: #8e8e93;
+    margin-left: 6px;
+}
+.event-tag:hover .remove-event {
+    color: white;
+}
 
     </style>
 </head>
@@ -695,13 +671,10 @@
 <div class="app-container">
     <div class="header">
         <div class="header-left">
-            <h1>研学录</h1>
+            <h1>研学录 · 历史文库</h1>
             <div class="classic-tabs" id="classicTabsContainer">
-                <button class="classic-btn" data-classic="lunyu">论语</button>
-                <button class="classic-btn" data-classic="shijing">诗经</button>
-                <button class="classic-btn" data-classic="tangshi">唐诗</button>
-                <button class="classic-btn" data-classic="songci">宋词</button>
-           
+                <button class="classic-btn" data-classic="china">中国历史</button>
+                <button class="classic-btn" data-classic="world">世界历史</button>
             </div>
         </div>
         <div class="header-actions">
@@ -716,7 +689,7 @@
             <button id="settingsBtn" class="icon-btn">
                 <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
                     <g data-name="1" id="_1">
-                        <path d="M293.9,450H233.53a15,15,0,0,1-14.92-13.42l-4.47-42.09a152.77,152.77,0,0,1-18.25-7.56L163,413.53a15,15,0,0,1-20-1.06l-42.69-42.69a15,15,0,0,1-1.06-20l26.61-32.93a152.15,152.15,0,0,1-7.57-18.25L76.13,294.1a15,15,0,0,1-13.42-14.91V218.81A15,15,0,0,1,76.13,203.9l42.09-4.47a152.15,152.15,0,0,1,7.57-18.25L99.18,148.25a15,15,0,0,1,1.06-20l42.69-42.69a15,15,0,0,1,20-1.06l32.93,26.6a152.77,152.77,0,0,1,18.25-7.56l4.47-42.09A15,15,0,0,1,233.53,48H293.9a15,15,0,0,1,14.92,13.42l4.46,42.09a152.91,152.91,0,0,1,18.26,7.56l32.92-26.6a15,15,0,0,1,20,1.06l42.69,42.69a15,15,0,0,1,1.06,20l-26.61,32.93a153.8,153.8,0,0,1,7.57,18.25l42.09,4.47a15,15,0,0,1,13.41,14.91v60.38A15,15,0,0,1,451.3,294.1l-42.09,4.47a153.8,153.8,0,0,1-7.57,18.25l26.61,32.93a15,15,0,0,1-1.06,20L384.5,412.47a15,15,0,0,1-20,1.06l-32.92-26.6a152.91,152.91,0,0,1-18.26,7.56l-4.46,42.09A15,15,0,0,1,293.9,450ZM247,420h33.39l4.09-38.56a15,15,0,0,1,11.06-12.91A123,123,0,0,0,325.7,356a15,15,0,0,1,17,1.31l30.16,24.37,23.61-23.61L372.06,328a15,15,0,0,1-1.31-17,122.63,122.63,0,0,0,12.49-30.14,15,15,0,0,1,12.92-11.06l38.55-4.1V232.31l-38.55-4.1a15,15,0,0,1-12.92-11.06A122.63,122.63,0,0,0,370.75,187a15,15,0,0,1,1.31-17l24.37-30.16-23.61-23.61-30.16,24.37a15,15,0,0,1-17,1.31,123,123,0,0,0-30.14-12.49,15,15,0,0,1-11.06-12.91L280.41,78H247l-4.09,38.56a15,15,0,0,1-11.07,12.91A122.79,122.79,0,0,0,201.73,142a15,15,0,0,1-17-1.31L154.6,116.28,131,139.89l24.38,30.16a15,15,0,0,1,1.3,17,123.41,123.41,0,0,0-12.49,30.14,15,15,0,0,1-12.91,11.06l-38.56,4.1v33.38l38.56,4.1a15,15,0,0,1,12.91,11.06A123.41,123.41,0,0,0,156.67,311a15,15,0,0,1-1.3,17L131,358.11l23.61,23.61,30.17-24.37a15,15,0,0,1,17-1.31,122.79,122.79,0,0,0,30.13,12.49,15,15,0,0,1,11.07,12.91ZM449.71,279.19h0Z"/>
+                        <path d="M293.9,450H233.53a15,15,0,0,1-14.92-13.42l-4.47-42.09a152.77,152.77,0,0,1-18.25-7.56L163,413.53a15,15,0,0,1-20-1.06l-42.69-42.69a15,15,0,0,1-1.06-20l26.61-32.93a152.15,152.15,0,0,1-7.57-18.25L76.13,294.1a15,15,0,0,1-13.42-14.91V218.81A15,15,0,0,1,76.13,203.9l42.09-4.47a152.15,152.15,0,0,1,7.57-18.25L99.18,148.25a15,15,0,0,1,1.06-20l42.69-42.69a15,15,0,0,1,20-1.06l32.93,26.6a152.77,152.77,0,0,1,18.25-7.56l4.47-42.09A15,15,0,0,1,233.53,48H293.9a15,15,0,0,1,14.92,13.42l4.46,42.09a152.91,152.91,0,0,1,18.26,7.56l32.92-26.6a15,15,0,0,1,20,1.06l42.69,42.69a15,15,0,0,1,1.06,20l-26.61,32.93a153.8,153.8,0,0,1,7.57,18.25l42.09,4.47a15,15,0,0,1,13.41,14.91v60.38A15,15,0,0,1,451.3,294.1l-42.09,4.47a153.8,153.8,0,0,1-7.57,18.25l26.61,32.93a15,15,0,0,1-1.06,20L384.5,412.47a15,15,0,0,1-20,1.06l-32.92-26.6a152.91,152.91,0,0,1-18.26,7.56l-4.46,42.09A15,15,0,0,1,293.9,450Z"/>
                         <path d="M263.71,340.36A91.36,91.36,0,1,1,355.08,249,91.46,91.46,0,0,1,263.71,340.36Zm0-152.72A61.36,61.36,0,1,0,325.08,249,61.43,61.43,0,0,0,263.71,187.64Z"/>
                     </g>
                 </svg>
@@ -730,45 +703,88 @@
         </div>
         <div class="main-content">
             <div class="records-header">
-                
-                <button id="openAddModalBtn" class="btn-add-record">新增</button>
+                <button id="openAddModalBtn" class="btn-add-record">新增笔记</button>
             </div>
             <div id="recordsContainer" class="records-list"></div>
             <div class="status-bar" id="statusMsg"></div>
         </div>
     </div>
-    <footer>多经典支持 · 目录自定义 · Gist云同步</footer>
+    <footer>历史文库 · 目录自定义 · Gist云同步</footer>
 </div>
 
 <!-- 笔记模态窗 -->
 <div id="noteModal" class="modal-mask">
     <div class="modal-container">
         <div class="modal-header">
-            <h3 id="modalTitle">笔记</h3>
+            <h3 id="modalTitle">人物笔记</h3>
             <div style="display: flex; gap: 8px; align-items: center;">
                 <button id="modalConfirmBtn" class="btn-confirm" style="padding: 6px 14px; font-size: 13px;">保存</button>
                 <button class="close-modal" id="closeModalBtn">&times;</button>
             </div>
         </div>
         <div class="modal-body">
-            <div class="four-fields">
-                <div class="field-group">
-                    <div class="field-label">原文</div>
-                    <div id="editorOriginal" class="quill-editor"></div>
-                </div>
-                <div class="field-group">
-                    <div class="field-label">注释</div>
-                    <div id="editorNotes" class="quill-editor"></div>
-                </div>
-                <div class="field-group">
-                    <div class="field-label">补充</div>
-                    <div id="editorSupplement" class="quill-editor"></div>
-                </div>
-                <div class="field-group">
-                    <div class="field-label">译文</div>
-                    <div id="editorTranslation" class="quill-editor"></div>
-                </div>
-            </div>
+ <div class="four-fields">
+    <div class="field-group">
+    <div class="field-label">生平与成就</div>
+    <div id="editorOriginal" class="quill-editor"></div>
+</div>
+<div class="field-group">
+    <div class="field-label">历史评价</div>
+    <div id="editorSupplement" class="quill-editor"></div>
+</div>
+
+<!-- 相关事件 -->
+<div class="field-group">
+    <div class="field-label">相关事件</div>
+    <div id="relatedEventsContainer" style="padding: 8px 12px; background: #f9f9fb; border-bottom: 0.5px solid #e5e5ea; display: flex; flex-wrap: wrap; gap: 6px; min-height: 42px;"></div>
+    <div style="padding: 8px 12px; display: flex; gap: 8px;">
+        <input type="text" id="relatedEventInput" placeholder="输入事件名，如：玄武门之变" style="flex:2; padding: 8px 12px; border: 0.5px solid #e5e5ea; border-radius: 8px; font-size: 14px;">
+        <button id="addRelatedEventBtn" style="background: #61A2DA; border: none; padding: 8px 16px; border-radius: 8px; color: white; cursor: pointer;">添加</button>
+    </div>
+</div>
+
+
+<div class="field-group">
+    <div class="field-label">相关人物</div>
+    <div id="relatedPersonsContainer" style="padding: 8px 12px; background: #f9f9fb; border-bottom: 0.5px solid #e5e5ea; display: flex; flex-wrap: wrap; gap: 6px; min-height: 42px;"></div>
+    <div style="padding: 8px 12px; display: flex; gap: 8px; flex-wrap: wrap;">
+        <select id="relationTypeSelect" style="padding: 8px 12px; border: 0.5px solid #e5e5ea; border-radius: 8px; font-size: 14px; background: white;">
+            <option value="父亲">父亲</option>
+            <option value="母亲">母亲</option>
+            <option value="儿子">儿子</option>
+            <option value="女儿">女儿</option>
+            <option value="兄弟">兄弟</option>
+            <option value="姐妹">姐妹</option>
+            <option value="配偶">配偶</option>
+            <option value="师傅">师傅</option>
+            <option value="徒弟">徒弟</option>
+            <option value="同僚">同僚</option>
+            <option value="政敌">政敌</option>
+            <option value="君主">君主</option>
+            <option value="下属">下属</option>
+            <option value="其他">其他</option>
+        </select>
+        <input type="text" id="relatedPersonInput" placeholder="输入人物名" style="flex:2; padding: 8px 12px; border: 0.5px solid #e5e5ea; border-radius: 8px; font-size: 14px;">
+        <button id="addRelatedPersonBtn" style="background: #61A2DA; border: none; padding: 8px 16px; border-radius: 8px; color: white; cursor: pointer;">添加</button>
+    </div>
+</div>
+
+
+
+
+    <!-- 👇 时代线：放在相关人物后面 -->
+    <div class="field-group">
+        <div class="field-label">时代线</div>
+        <div id="timelineContainer" style="padding: 8px 12px; background: #f9f9fb; border-bottom: 0.5px solid #e5e5ea; display: flex; flex-wrap: wrap; gap: 6px; min-height: 42px;"></div>
+        <div style="padding: 8px 12px; display: flex; gap: 8px;">
+            <input type="text" id="timelineInput" placeholder="输入时代/人物，如：唐玄宗" style="flex:2; padding: 8px 12px; border: 0.5px solid #e5e5ea; border-radius: 8px; font-size: 14px;">
+            <button id="addTimelineBtn" style="background: #61A2DA; border: none; padding: 8px 16px; border-radius: 8px; color: white; cursor: pointer;">添加</button>
+        </div>
+        <div style="padding: 4px 12px 8px 12px; font-size: 12px; color: #8e8e93;">
+            按顺序添加：先添加的显示在左边，后添加的显示在右边
+        </div>
+    </div>
+</div>
         </div>
     </div>
 </div>
@@ -776,11 +792,11 @@
 <!-- 目录编辑模态窗 -->
 <div id="catalogModal" class="modal-mask edit-modal">
     <div class="modal-container">
-        <div class="modal-header"><h3>编辑目录</h3><button class="close-modal" id="closeCatalogBtn">&times;</button></div>
+        <div class="modal-header"><h3>编辑历史目录</h3><button class="close-modal" id="closeCatalogBtn">&times;</button></div>
         <div class="modal-body">
             <div id="catalogTreeList" class="edit-tree-list"></div>
             <div class="add-root-input">
-                <input type="text" id="newRootName" placeholder="新分组名称">
+                <input type="text" id="newRootName" placeholder="新朝代/时期名称">
                 <button id="addRootBtn">添加一级</button>
             </div>
         </div>
@@ -800,25 +816,436 @@
     </div>
 </div>
 
+
 <script>
-    // 多经典数据结构
+    // 历史人物目录结构 (朝代 -> 人物)
     const defaultTrees = {
-    lunyu: [{ id: "l1", name: "学而篇", children: [] }, { id: "l2", name: "为政篇", children: [] }],
-    shijing: [{ id: "s1", name: "国风", children: [{ id: "s1-1", name: "周南", children: [{ id: "s1-1-1", name: "关雎" }] }] }],
-    tangshi: [{ id: "t1", name: "初唐", children: [{ id: "t1-1", name: "王勃", children: [{ id: "t1-1-1", name: "送杜少府之任蜀州" }] }] }, { id: "t2", name: "盛唐", children: [{ id: "t2-1", name: "李白", children: [{ id: "t2-1-1", name: "静夜思" }] }] }],
-    songci: [{ id: "c1", name: "婉约派", children: [{ id: "c1-1", name: "李清照", children: [{ id: "c1-1-1", name: "如梦令" }] }] }, { id: "c2", name: "豪放派", children: [{ id: "c2-1", name: "苏轼", children: [{ id: "c2-1-1", name: "念奴娇·赤壁怀古" }] }] }],
-
-
-
-};
+        
+   china: [
+    { id: "c1", name: "夏朝", children: [
+        { id: "c1-1", name: "皇帝", children: [
+            { id: "c1-1-1", name: "大禹", children: [] },
+            { id: "c1-1-2", name: "启", children: [] }
+        ] },
+        { id: "c1-2", name: "名人", children: [] },
+        { id: "c1-3", name: "事件", children: [] }
+    ] },
+    { id: "c2", name: "商朝", children: [
+        { id: "c2-1", name: "皇帝", children: [
+            { id: "c2-1-1", name: "商汤", children: [] },
+            { id: "c2-1-2", name: "盘庚", children: [] },
+            { id: "c2-1-3", name: "商纣王", children: [] }
+        ] },
+        { id: "c2-2", name: "名人", children: [] },
+        { id: "c2-3", name: "事件", children: [] }
+    ] },
+    { id: "c3", name: "西周", children: [
+        { id: "c3-1", name: "皇帝", children: [
+            { id: "c3-1-1", name: "周文王", children: [] },
+            { id: "c3-1-2", name: "周武王", children: [] },
+            { id: "c3-1-3", name: "周成王", children: [] },
+            { id: "c3-1-4", name: "周幽王", children: [] }
+        ] },
+        { id: "c3-2", name: "名人", children: [
+            { id: "c3-2-1", name: "周公旦", children: [] }
+        ] },
+        { id: "c3-3", name: "事件", children: [] }
+    ] },
+    { id: "c4", name: "东周", children: [
+        { id: "c4-1", name: "皇帝", children: [
+            { id: "c4-1-1", name: "周平王", children: [] },
+            { id: "c4-1-2", name: "齐桓公", children: [] },
+            { id: "c4-1-3", name: "晋文公", children: [] },
+            { id: "c4-1-4", name: "楚庄王", children: [] },
+            { id: "c4-1-5", name: "越王勾践", children: [] }
+        ] },
+        { id: "c4-2", name: "名人", children: [
+            { id: "c4-2-1", name: "孔子", children: [] },
+            { id: "c4-2-2", name: "老子", children: [] },
+            { id: "c4-2-3", name: "孙子", children: [] }
+        ] },
+        { id: "c4-3", name: "事件", children: [] }
+    ] },
+    { id: "c5", name: "秦朝", children: [
+        { id: "c5-1", name: "皇帝", children: [
+            { id: "c5-1-1", name: "秦始皇", children: [] },
+            { id: "c5-1-2", name: "秦二世", children: [] }
+        ] },
+        { id: "c5-2", name: "名人", children: [
+            { id: "c5-2-1", name: "李斯", children: [] },
+            { id: "c5-2-2", name: "王翦", children: [] },
+            { id: "c5-2-3", name: "蒙恬", children: [] }
+        ] },
+        { id: "c5-3", name: "事件", children: [
+            { id: "c5-3-1", name: "商鞅变法", children: [] },
+            { id: "c5-3-2", name: "统一六国", children: [] },
+            { id: "c5-3-3", name: "焚书坑儒", children: [] }
+        ] }
+    ] },
+    { id: "c6", name: "西汉", children: [
+        { id: "c6-1", name: "皇帝", children: [
+            { id: "c6-1-1", name: "刘邦", children: [] },
+            { id: "c6-1-2", name: "汉惠帝", children: [] },
+            { id: "c6-1-3", name: "汉文帝", children: [] },
+            { id: "c6-1-4", name: "汉景帝", children: [] },
+            { id: "c6-1-5", name: "汉武帝", children: [] },
+            { id: "c6-1-6", name: "汉宣帝", children: [] }
+        ] },
+        { id: "c6-2", name: "名人", children: [
+            { id: "c6-2-1", name: "张骞", children: [] },
+            { id: "c6-2-2", name: "司马迁", children: [] },
+            { id: "c6-2-3", name: "卫青", children: [] },
+            { id: "c6-2-4", name: "霍去病", children: [] }
+        ] },
+        { id: "c6-3", name: "事件", children: [
+            { id: "c6-3-1", name: "文景之治", children: [] },
+            { id: "c6-3-2", name: "张骞出使西域", children: [] },
+            { id: "c6-3-3", name: "盐铁会议", children: [] }
+        ] }
+    ] },
+    { id: "c7", name: "东汉", children: [
+        { id: "c7-1", name: "皇帝", children: [
+            { id: "c7-1-1", name: "刘秀", children: [] },
+            { id: "c7-1-2", name: "汉明帝", children: [] },
+            { id: "c7-1-3", name: "汉章帝", children: [] },
+            { id: "c7-1-4", name: "汉桓帝", children: [] },
+            { id: "c7-1-5", name: "汉灵帝", children: [] },
+            { id: "c7-1-6", name: "汉献帝", children: [] }
+        ] },
+        { id: "c7-2", name: "名人", children: [
+            { id: "c7-2-1", name: "蔡伦", children: [] },
+            { id: "c7-2-2", name: "张衡", children: [] },
+            { id: "c7-2-3", name: "华佗", children: [] }
+        ] },
+        { id: "c7-3", name: "事件", children: [
+            { id: "c7-3-1", name: "光武中兴", children: [] },
+            { id: "c7-3-2", name: "黄巾起义", children: [] },
+            { id: "c7-3-3", name: "官渡之战", children: [] }
+        ] }
+    ] },
+    { id: "c8", name: "三国", children: [
+        { id: "c8-1", name: "皇帝", children: [
+            { id: "c8-1-1", name: "曹操", children: [] },
+            { id: "c8-1-2", name: "曹丕", children: [] },
+            { id: "c8-1-3", name: "刘备", children: [] },
+            { id: "c8-1-4", name: "刘禅", children: [] },
+            { id: "c8-1-5", name: "孙权", children: [] }
+        ] },
+        { id: "c8-2", name: "名人", children: [
+            { id: "c8-2-1", name: "诸葛亮", children: [] },
+            { id: "c8-2-2", name: "司马懿", children: [] },
+            { id: "c8-2-3", name: "周瑜", children: [] },
+            { id: "c8-2-4", name: "关羽", children: [] },
+            { id: "c8-2-5", name: "张飞", children: [] }
+        ] },
+        { id: "c8-3", name: "事件", children: [
+            { id: "c8-3-1", name: "赤壁之战", children: [] },
+            { id: "c8-3-2", name: "夷陵之战", children: [] },
+            { id: "c8-3-3", name: "街亭之战", children: [] }
+        ] }
+    ] },
+    { id: "c9", name: "西晋", children: [
+        { id: "c9-1", name: "皇帝", children: [
+            { id: "c9-1-1", name: "司马炎", children: [] },
+            { id: "c9-1-2", name: "司马衷", children: [] }
+        ] },
+        { id: "c9-2", name: "名人", children: [] },
+        { id: "c9-3", name: "事件", children: [
+            { id: "c9-3-1", name: "八王之乱", children: [] }
+        ] }
+    ] },
+    { id: "c10", name: "东晋", children: [
+        { id: "c10-1", name: "皇帝", children: [
+            { id: "c10-1-1", name: "司马睿", children: [] }
+        ] },
+        { id: "c10-2", name: "名人", children: [
+            { id: "c10-2-1", name: "王导", children: [] },
+            { id: "c10-2-2", name: "王羲之", children: [] },
+            { id: "c10-2-3", name: "顾恺之", children: [] },
+            { id: "c10-2-4", name: "谢安", children: [] }
+        ] },
+        { id: "c10-3", name: "事件", children: [
+            { id: "c10-3-1", name: "淝水之战", children: [] }
+        ] }
+    ] },
+    { id: "c11", name: "南北朝", children: [
+        { id: "c11-1", name: "皇帝", children: [
+            { id: "c11-1-1", name: "北魏孝文帝", children: [] }
+        ] },
+        { id: "c11-2", name: "名人", children: [
+            { id: "c11-2-1", name: "花木兰", children: [] }
+        ] },
+        { id: "c11-3", name: "事件", children: [] }
+    ] },
+    { id: "c12", name: "隋朝", children: [
+        { id: "c12-1", name: "皇帝", children: [
+            { id: "c12-1-1", name: "隋文帝", children: [] },
+            { id: "c12-1-2", name: "隋炀帝", children: [] }
+        ] },
+        { id: "c12-2", name: "名人", children: [] },
+        { id: "c12-3", name: "事件", children: [
+            { id: "c12-3-1", name: "开皇之治", children: [] },
+            { id: "c12-3-2", name: "修建大运河", children: [] },
+            { id: "c12-3-3", name: "三征高句丽", children: [] }
+        ] }
+    ] },
+    { id: "c13", name: "唐朝", children: [
+        { id: "c13-1", name: "皇帝", children: [
+            { id: "c13-1-1", name: "唐高祖", children: [] },
+            { id: "c13-1-2", name: "唐太宗", children: [] },
+            { id: "c13-1-3", name: "唐高宗", children: [] },
+            { id: "c13-1-4", name: "武则天", children: [] },
+            { id: "c13-1-5", name: "唐中宗", children: [] },
+            { id: "c13-1-6", name: "唐睿宗", children: [] },
+            { id: "c13-1-7", name: "唐玄宗", children: [] },
+            { id: "c13-1-8", name: "唐肃宗", children: [] },
+            { id: "c13-1-9", name: "唐代宗", children: [] }
+        ] },
+        { id: "c13-2", name: "名人", children: [
+            { id: "c13-2-1", name: "李白", children: [] },
+            { id: "c13-2-2", name: "杜甫", children: [] },
+            { id: "c13-2-3", name: "白居易", children: [] },
+            { id: "c13-2-4", name: "王维", children: [] },
+            { id: "c13-2-5", name: "杨贵妃", children: [] },
+            { id: "c13-2-6", name: "玄奘", children: [] },
+            { id: "c13-2-7", name: "魏征", children: [] },
+            { id: "c13-2-8", name: "房玄龄", children: [] }
+        ] },
+        { id: "c13-3", name: "事件", children: [
+            { id: "c13-3-1", name: "玄武门之变", children: [] },
+            { id: "c13-3-2", name: "贞观之治", children: [] },
+            { id: "c13-3-3", name: "开元盛世", children: [] },
+            { id: "c13-3-4", name: "安史之乱", children: [] }
+        ] }
+    ] },
+    { id: "c14", name: "五代十国", children: [
+        { id: "c14-1", name: "皇帝", children: [
+            { id: "c14-1-1", name: "朱温", children: [] },
+            { id: "c14-1-2", name: "李存勖", children: [] }
+        ] },
+        { id: "c14-2", name: "名人", children: [] },
+        { id: "c14-3", name: "事件", children: [] }
+    ] },
+    { id: "c15", name: "北宋", children: [
+        { id: "c15-1", name: "皇帝", children: [
+            { id: "c15-1-1", name: "宋太祖", children: [] },
+            { id: "c15-1-2", name: "宋太宗", children: [] },
+            { id: "c15-1-3", name: "宋真宗", children: [] },
+            { id: "c15-1-4", name: "宋仁宗", children: [] },
+            { id: "c15-1-5", name: "宋神宗", children: [] },
+            { id: "c15-1-6", name: "宋徽宗", children: [] },
+            { id: "c15-1-7", name: "宋钦宗", children: [] }
+        ] },
+        { id: "c15-2", name: "名人", children: [
+            { id: "c15-2-1", name: "赵匡胤", children: [] },
+            { id: "c15-2-2", name: "包拯", children: [] },
+            { id: "c15-2-3", name: "王安石", children: [] },
+            { id: "c15-2-4", name: "苏轼", children: [] },
+            { id: "c15-2-5", name: "李清照", children: [] },
+            { id: "c15-2-6", name: "沈括", children: [] },
+            { id: "c15-2-7", name: "司马光", children: [] }
+        ] },
+        { id: "c15-3", name: "事件", children: [
+            { id: "c15-3-1", name: "陈桥兵变", children: [] },
+            { id: "c15-3-2", name: "澶渊之盟", children: [] },
+            { id: "c15-3-3", name: "王安石变法", children: [] },
+            { id: "c15-3-4", name: "靖康之变", children: [] }
+        ] }
+    ] },
+    { id: "c16", name: "南宋", children: [
+        { id: "c16-1", name: "皇帝", children: [
+            { id: "c16-1-1", name: "宋高宗", children: [] },
+            { id: "c16-1-2", name: "宋孝宗", children: [] },
+            { id: "c16-1-3", name: "宋理宗", children: [] },
+            { id: "c16-1-4", name: "宋度宗", children: [] },
+            { id: "c16-1-5", name: "宋恭帝", children: [] },
+            { id: "c16-1-6", name: "宋端宗", children: [] },
+            { id: "c16-1-7", name: "宋末帝", children: [] }
+        ] },
+        { id: "c16-2", name: "名人", children: [
+            { id: "c16-2-1", name: "岳飞", children: [] },
+            { id: "c16-2-2", name: "辛弃疾", children: [] },
+            { id: "c16-2-3", name: "陆游", children: [] },
+            { id: "c16-2-4", name: "文天祥", children: [] }
+        ] },
+        { id: "c16-3", name: "事件", children: [
+            { id: "c16-3-1", name: "岳飞北伐", children: [] },
+            { id: "c16-3-2", name: "绍兴和议", children: [] },
+            { id: "c16-3-3", name: "崖山海战", children: [] }
+        ] }
+    ] },
+    { id: "c17", name: "辽朝", children: [
+        { id: "c17-1", name: "皇帝", children: [
+            { id: "c17-1-1", name: "耶律阿保机", children: [] }
+        ] },
+        { id: "c17-2", name: "名人", children: [
+            { id: "c17-2-1", name: "萧太后", children: [] }
+        ] },
+        { id: "c17-3", name: "事件", children: [] }
+    ] },
+    { id: "c18", name: "金朝", children: [
+        { id: "c18-1", name: "皇帝", children: [
+            { id: "c18-1-1", name: "完颜阿骨打", children: [] }
+        ] },
+        { id: "c18-2", name: "名人", children: [] },
+        { id: "c18-3", name: "事件", children: [] }
+    ] },
+    { id: "c19", name: "西夏", children: [
+        { id: "c19-1", name: "皇帝", children: [
+            { id: "c19-1-1", name: "李元昊", children: [] }
+        ] },
+        { id: "c19-2", name: "名人", children: [] },
+        { id: "c19-3", name: "事件", children: [] }
+    ] },
+    { id: "c20", name: "元朝", children: [
+        { id: "c20-1", name: "皇帝", children: [
+            { id: "c20-1-1", name: "成吉思汗", children: [] },
+            { id: "c20-1-2", name: "忽必烈", children: [] }
+        ] },
+        { id: "c20-2", name: "名人", children: [
+            { id: "c20-2-1", name: "关汉卿", children: [] },
+            { id: "c20-2-2", name: "马致远", children: [] },
+            { id: "c20-2-3", name: "郭守敬", children: [] }
+        ] },
+        { id: "c20-3", name: "事件", children: [
+            { id: "c20-3-1", name: "蒙古西征", children: [] },
+            { id: "c20-3-2", name: "灭亡南宋", children: [] }
+        ] }
+    ] },
+    { id: "c21", name: "明朝", children: [
+        { id: "c21-1", name: "皇帝", children: [
+            { id: "c21-1-1", name: "朱元璋", children: [] },
+            { id: "c21-1-2", name: "朱允炆", children: [] },
+            { id: "c21-1-3", name: "朱棣", children: [] },
+            { id: "c21-1-4", name: "朱高炽", children: [] },
+            { id: "c21-1-5", name: "朱瞻基", children: [] },
+            { id: "c21-1-6", name: "朱祁镇", children: [] },
+            { id: "c21-1-7", name: "朱祁钰", children: [] },
+            { id: "c21-1-8", name: "朱见深", children: [] },
+            { id: "c21-1-9", name: "朱祐樘", children: [] },
+            { id: "c21-1-10", name: "朱厚照", children: [] },
+            { id: "c21-1-11", name: "朱厚熜", children: [] },
+            { id: "c21-1-12", name: "朱载坖", children: [] },
+            { id: "c21-1-13", name: "朱翊钧", children: [] },
+            { id: "c21-1-14", name: "朱常洛", children: [] },
+            { id: "c21-1-15", name: "朱由校", children: [] },
+            { id: "c21-1-16", name: "朱由检", children: [] }
+        ] },
+        { id: "c21-2", name: "名人", children: [
+            { id: "c21-2-1", name: "郑和", children: [] },
+            { id: "c21-2-2", name: "王阳明", children: [] },
+            { id: "c21-2-3", name: "张居正", children: [] },
+            { id: "c21-2-4", name: "戚继光", children: [] },
+            { id: "c21-2-5", name: "李时珍", children: [] },
+            { id: "c21-2-6", name: "海瑞", children: [] },
+            { id: "c21-2-7", name: "徐达", children: [] },
+            { id: "c21-2-8", name: "刘伯温", children: [] }
+        ] },
+        { id: "c21-3", name: "事件", children: [
+            { id: "c21-3-1", name: "靖难之役", children: [] },
+            { id: "c21-3-2", name: "郑和下西洋", children: [] },
+            { id: "c21-3-3", name: "土木堡之变", children: [] },
+            { id: "c21-3-4", name: "夺门之变", children: [] },
+            { id: "c21-3-5", name: "万历三大征", children: [] }
+        ] }
+    ] },
+    { id: "c22", name: "清朝", children: [
+        { id: "c22-1", name: "皇帝", children: [
+            { id: "c22-1-1", name: "努尔哈赤", children: [] },
+            { id: "c22-1-2", name: "皇太极", children: [] },
+            { id: "c22-1-3", name: "顺治", children: [] },
+            { id: "c22-1-4", name: "康熙", children: [] },
+            { id: "c22-1-5", name: "雍正", children: [] },
+            { id: "c22-1-6", name: "乾隆", children: [] },
+            { id: "c22-1-7", name: "嘉庆", children: [] },
+            { id: "c22-1-8", name: "道光", children: [] },
+            { id: "c22-1-9", name: "咸丰", children: [] },
+            { id: "c22-1-10", name: "同治", children: [] },
+            { id: "c22-1-11", name: "光绪", children: [] },
+            { id: "c22-1-12", name: "宣统", children: [] }
+        ] },
+        { id: "c22-2", name: "名人", children: [
+            { id: "c22-2-1", name: "曹雪芹", children: [] },
+            { id: "c22-2-2", name: "林则徐", children: [] },
+            { id: "c22-2-3", name: "曾国藩", children: [] },
+            { id: "c22-2-4", name: "李鸿章", children: [] },
+            { id: "c22-2-5", name: "左宗棠", children: [] },
+            { id: "c22-2-6", name: "慈禧太后", children: [] },
+            { id: "c22-2-7", name: "梁启超", children: [] },
+            { id: "c22-2-8", name: "康有为", children: [] }
+        ] },
+        { id: "c22-3", name: "事件", children: [
+            { id: "c22-3-1", name: "鸦片战争", children: [] },
+            { id: "c22-3-2", name: "太平天国", children: [] },
+            { id: "c22-3-3", name: "洋务运动", children: [] },
+            { id: "c22-3-4", name: "甲午战争", children: [] },
+            { id: "c22-3-5", name: "戊戌变法", children: [] },
+            { id: "c22-3-6", name: "义和团运动", children: [] },
+            { id: "c22-3-7", name: "辛亥革命", children: [] }
+        ] }
+    ] },
+    { id: "c23", name: "中华民国", children: [
+        { id: "c23-1", name: "总统", children: [
+            { id: "c23-1-1", name: "孙中山", children: [] },
+            { id: "c23-1-2", name: "袁世凯", children: [] },
+            { id: "c23-1-3", name: "蒋介石", children: [] }
+        ] },
+        { id: "c23-2", name: "名人", children: [
+            { id: "c23-2-1", name: "张学良", children: [] },
+            { id: "c23-2-2", name: "鲁迅", children: [] },
+            { id: "c23-2-3", name: "胡适", children: [] },
+            { id: "c23-2-4", name: "陈独秀", children: [] }
+        ] },
+        { id: "c23-3", name: "事件", children: [
+            { id: "c23-3-1", name: "辛亥革命", children: [] },
+            { id: "c23-3-2", name: "五四运动", children: [] },
+            { id: "c23-3-3", name: "抗日战争", children: [] }
+        ] }
+    ] },
+    { id: "c24", name: "中华人民共和国", children: [
+        { id: "c24-1", name: "主席", children: [
+            { id: "c24-1-1", name: "毛泽东", children: [] },
+            { id: "c24-1-2", name: "邓小平", children: [] },
+            { id: "c24-1-3", name: "江泽民", children: [] },
+            { id: "c24-1-4", name: "胡锦涛", children: [] },
+            { id: "c24-1-5", name: "习近平", children: [] }
+        ] },
+        { id: "c24-2", name: "名人", children: [
+            { id: "c24-2-1", name: "周恩来", children: [] },
+            { id: "c24-2-2", name: "钱学森", children: [] },
+            { id: "c24-2-3", name: "袁隆平", children: [] },
+            { id: "c24-2-4", name: "屠呦呦", children: [] },
+            { id: "c24-2-5", name: "莫言", children: [] }
+        ] },
+        { id: "c24-3", name: "事件", children: [
+            { id: "c24-3-1", name: "新中国成立", children: [] },
+            { id: "c24-3-2", name: "改革开放", children: [] },
+            { id: "c24-3-3", name: "香港回归", children: [] },
+            { id: "c24-3-4", name: "澳门回归", children: [] },
+            { id: "c24-3-5", name: "加入世贸", children: [] }
+        ] }
+    ] }
+],
+       
+        world: [
+            { id: "w1", name: "古代文明", children: [{ id: "w1-1", name: "汉谟拉比", children: [] }, { id: "w1-2", name: "苏格拉底", children: [] }, { id: "w1-3", name: "柏拉图", children: [] }, { id: "w1-4", name: "亚里士多德", children: [] }, { id: "w1-5", name: "亚历山大大帝", children: [] }, { id: "w1-6", name: "凯撒", children: [] }, { id: "w1-7", name: "屋大维", children: [] }, { id: "w1-8", name: "耶稣", children: [] }] },
+            { id: "w2", name: "中世纪", children: [{ id: "w2-1", name: "查理曼大帝", children: [] }, { id: "w2-2", name: "穆罕默德", children: [] }, { id: "w2-3", name: "狮心王理查", children: [] }, { id: "w2-4", name: "但丁", children: [] }] },
+            { id: "w3", name: "近代早期", children: [{ id: "w3-1", name: "达·芬奇", children: [] }, { id: "w3-2", name: "哥伦布", children: [] }, { id: "w3-3", name: "马丁·路德", children: [] }, { id: "w3-4", name: "莎士比亚", children: [] }, { id: "w3-5", name: "牛顿", children: [] }] },
+            { id: "w4", name: "革命与帝国", children: [{ id: "w4-1", name: "华盛顿", children: [] }, { id: "w4-2", name: "拿破仑", children: [] }, { id: "w4-3", name: "瓦特", children: [] }, { id: "w4-4", name: "达尔文", children: [] }, { id: "w4-5", name: "马克思", children: [] }, { id: "w4-6", name: "林肯", children: [] }] },
+            { id: "w5", name: "20世纪", children: [{ id: "w5-1", name: "罗斯福", children: [] }, { id: "w5-2", name: "丘吉尔", children: [] }, { id: "w5-3", name: "爱因斯坦", children: [] }, { id: "w5-4", name: "甘地", children: [] }, { id: "w5-5", name: "马丁·路德·金", children: [] }] }
+        ]
+    };
     
     let trees = JSON.parse(JSON.stringify(defaultTrees));
-    let currentClassic = 'lunyu';
-    let currentChapter = "学而篇";
+    let currentClassic = 'china';
+    let currentChapter = "秦始皇";
     let notes = [];
     let editingId = null;
-    let quillOriginal, quillNotes, quillSupplement, quillTranslation;
-
+    let quillOriginal, quillNotes, quillSupplement;
+    let expandedNodes = new Set();
+    let currentRelatedPersons = [];  // 存储 { name, relation }
+let currentTimeline = [];  // 存储时代线数组，按顺序
+let currentRelatedEvents = [];  // 存储相关事件
     function getCurrentTree() { return trees[currentClassic] || []; }
     function genId() { return Date.now() + '-' + Math.random().toString(36).substr(2, 6); }
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;' }[m])); }
@@ -832,12 +1259,11 @@
         return leaves;
     }
 
-    function saveTrees() { localStorage.setItem('classic_trees', JSON.stringify(trees)); }
-    function loadTrees() { const t = localStorage.getItem('classic_trees'); if (t) trees = JSON.parse(t); else trees = JSON.parse(JSON.stringify(defaultTrees)); }
-    function saveNotes() { localStorage.setItem('study_notes', JSON.stringify(notes)); }
-    function loadNotes() { const s = localStorage.getItem('study_notes'); if (s) notes = JSON.parse(s); else notes = []; }
+    function saveTrees() { localStorage.setItem('history_trees', JSON.stringify(trees)); }
+    function loadTrees() { const t = localStorage.getItem('history_trees'); if (t) trees = JSON.parse(t); else trees = JSON.parse(JSON.stringify(defaultTrees)); }
+    function saveNotes() { localStorage.setItem('history_notes', JSON.stringify(notes)); }
+    function loadNotes() { const s = localStorage.getItem('history_notes'); if (s) notes = JSON.parse(s); else notes = []; }
 
-    // 渲染树形菜单：一级、二级、三级分别用不同缩进
     function renderTree() {
         const container = document.getElementById('chaptersTreeContainer');
         if (!container) return;
@@ -846,26 +1272,27 @@
         updateBadge();
     }
 
-  function renderNode(parentEl, node, level) {
+    function renderNode(parentEl, node, level) {
     const div = document.createElement('div');
     div.className = 'tree-node';
     const hasChildren = node.children && node.children.length > 0;
     const header = document.createElement('div');
-    
     if (level === 1) header.className = 'level-1';
     else if (level === 2) header.className = 'level-2';
     else header.className = 'level-3';
     
     const chevronHtml = hasChildren ? `<span class="chevron">›</span>` : `<span style="width:20px;display:inline-block"></span>`;
-    header.innerHTML = `
-        <div style="display:flex; align-items:center; flex:1">
-            ${chevronHtml}
-            <span class="node-title">${escapeHtml(node.name)}</span>
-        </div>
-    `;
+    header.innerHTML = `<div style="display:flex; align-items:center; flex:1">${chevronHtml}<span class="node-title">${escapeHtml(node.name)}</span></div>`;
+    
+    // 无论是否有子节点，都检查是否当前选中
+    if (currentChapter === node.name) {
+        header.classList.add('active-chapter');
+    } else {
+        header.classList.remove('active-chapter');
+    }
     
     if (!hasChildren) {
-        header.classList.toggle('active-chapter', currentChapter === node.name);
+        // 叶子节点：点击整个header选中
         header.addEventListener('click', (e) => {
             e.stopPropagation();
             selectChapter(node.name);
@@ -875,203 +1302,494 @@
         const childrenDiv = document.createElement('div');
         childrenDiv.className = 'children-container';
         node.children.forEach(child => renderNode(childrenDiv, child, level + 1));
-        childrenDiv.classList.add('open');
         
-        // ✅ 关键修复：先添加父节点 header，再添加子容器
+        // 恢复展开状态
+        if (expandedNodes.has(node.id)) {
+            childrenDiv.classList.add('open');
+            const chevSpan = header.querySelector('.chevron');
+            if (chevSpan) chevSpan.classList.add('open');
+        }
+        
         div.appendChild(header);
         div.appendChild(childrenDiv);
         
         const chevSpan = header.querySelector('.chevron');
-        header.addEventListener('click', (e) => {
+        const titleSpan = header.querySelector('.node-title');
+        
+        // 点击标题区域：选中当前节点（不展开/折叠）
+        titleSpan.addEventListener('click', (e) => {
             e.stopPropagation();
-            childrenDiv.classList.toggle('open');
-            chevSpan.classList.toggle('open');
+            selectChapter(node.name);
         });
+        
+        // 点击箭头：只展开/折叠，不改变选中
+        if (chevSpan) {
+            chevSpan.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = childrenDiv.classList.contains('open');
+                if (isOpen) {
+                    childrenDiv.classList.remove('open');
+                    chevSpan.classList.remove('open');
+                    expandedNodes.delete(node.id);
+                } else {
+                    childrenDiv.classList.add('open');
+                    chevSpan.classList.add('open');
+                    expandedNodes.add(node.id);
+                }
+            });
+        }
     }
     parentEl.appendChild(div);
 }
-    function selectChapter(name) {
-        currentChapter = name;
-        saveCurrent();
-        renderTree();
-        renderRecords();
-        showMsg(`当前: ${name}`);
-    }
 
-    function updateBadge() { document.getElementById('currentChapterBadge').innerText = currentChapter || '未选择'; }
-    function saveCurrent() { localStorage.setItem('currentClassic', currentClassic); localStorage.setItem('currentChapter', currentChapter); }
-    function loadCurrent() { const c = localStorage.getItem('currentClassic'); if (c && trees[c]) currentClassic = c; const ch = localStorage.getItem('currentChapter'); if (ch) currentChapter = ch; }
 
-function renderRecords() {
-    const container = document.getElementById('recordsContainer');
-    const filtered = notes.filter(n => n.classic === currentClassic && n.chapter === currentChapter);
-    if (!filtered.length) { container.innerHTML = '<div class="empty-msg">暂无笔记</div>'; return; }
-    container.innerHTML = '';
-    filtered.forEach(r => {
-        const card = document.createElement('div'); card.className = 'record-card';
-        
-        // 构建内容HTML
-        let contentHtml = '<div class="record-full-content">';
-        
-        // 原文区域 - 始终显示，点击可编辑
-        if (r.original && r.original !== '<p><br></p>' && r.original !== '—') {
-            contentHtml += `<div class="original-box" data-id="${r.id}" data-field="original"><div class="full-text original-text">${r.original}</div></div>`;
-        }
-        
-        // 注释区域 - 可收缩（默认收起）
-        if (r.notes && r.notes !== '<p><br></p>' && r.notes !== '—') {
-            const noteId = 'note_' + r.id;
-            contentHtml += `
-                <div class="collapsible-box">
-                    <div class="collapsible-header" onclick="toggleCollapsible('${noteId}')">
-                        <span class="collapse-arrow">▶</span> 注释
-                    </div>
-                    <div id="${noteId}" class="collapsible-content" style="display: none;">
-                        <div class="full-text gray-text">${r.notes}</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // 补充区域 - 可收缩（默认收起）
-        if (r.supplement && r.supplement !== '<p><br></p>' && r.supplement !== '—') {
-            const supplementId = 'supplement_' + r.id;
-            contentHtml += `
-                <div class="collapsible-box">
-                    <div class="collapsible-header" onclick="toggleCollapsible('${supplementId}')">
-                        <span class="collapse-arrow">▶</span> 补充
-                    </div>
-                    <div id="${supplementId}" class="collapsible-content" style="display: none;">
-                        <div class="full-text">${r.supplement}</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // 译文区域 - 可收缩（默认收起）
-        if (r.translation && r.translation !== '<p><br></p>' && r.translation !== '—') {
-            const translationId = 'translation_' + r.id;
-            contentHtml += `
-                <div class="collapsible-box">
-                    <div class="collapsible-header" onclick="toggleCollapsible('${translationId}')">
-                        <span class="collapse-arrow">▶</span> 译文
-                    </div>
-                    <div id="${translationId}" class="collapsible-content" style="display: none;">
-                        <div class="full-text">${r.translation}</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        contentHtml += '</div>';
-        
-        // 卡片头部：标题 + 日期 + 删除按钮（×）
-        card.innerHTML = `
-            <div class="record-header">
-                <span class="record-title">${escapeHtml(r.chapter)}</span>
-                <div class="record-header-right">
-                    <span class="record-meta">${new Date(r.updatedAt).toLocaleDateString()}</span>
-                    <button class="delete-icon" data-id="${r.id}" title="删除">×</button>
-                </div>
-            </div>
-            ${contentHtml}
-        `;
-        container.appendChild(card);
-    });
-    
-    // 点击原文直接编辑
-    document.querySelectorAll('.original-box').forEach(box => {
-        box.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const id = parseInt(box.dataset.id);
-            openEditModal(id);
-        });
-    });
-    
-    // 删除按钮事件
-    document.querySelectorAll('.delete-icon').forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if(confirm('删除笔记？')) {
-                const id = parseInt(btn.dataset.id);
-                notes = notes.filter(n => n.id !== id);
-                saveNotes();
-                renderRecords();
-                showMsg('已删除');
+function selectChapter(name) {
+    console.log("选中人物:", name);  // 调试用
+    currentChapter = name;
+    saveCurrent();
+    renderTree();  // 重新渲染会重新应用高亮
+    renderRecords();
+    showMsg(`当前人物: ${name}`);
+}
+    function updateBadge() { document.getElementById('currentChapterBadge').innerHTML = `📌 当前人物：${currentChapter || '未选择'}`; }
+    function saveCurrent() { localStorage.setItem('history_currentClassic', currentClassic); localStorage.setItem('history_currentChapter', currentChapter); }
+    function loadCurrent() { const c = localStorage.getItem('history_currentClassic'); if (c && trees[c]) currentClassic = c; const ch = localStorage.getItem('history_currentChapter'); if (ch) currentChapter = ch; }
+
+    function renderRecords() {
+        const container = document.getElementById('recordsContainer');
+        const filtered = notes.filter(n => n.classic === currentClassic && n.chapter === currentChapter);
+        if (!filtered.length) { container.innerHTML = '<div class="empty-msg">📭 暂无笔记，点击“新增笔记”开始记录</div>'; return; }
+        container.innerHTML = '';
+        filtered.forEach(r => {
+            const card = document.createElement('div'); card.className = 'record-card';
+            let contentHtml = '<div class="record-full-content">';
+            if (r.original && r.original !== '<p><br></p>') {
+                contentHtml += `<div class="original-box" data-id="${r.id}"><div class="full-text" style="font-size:16px; line-height:1.6;">${r.original}</div></div>`;
             }
-        });
+            
+            // 相关事件显示（可点击跳转）
+if (r.relatedEvents && r.relatedEvents.length > 0) {
+    let eventsHtml = '';
+    r.relatedEvents.forEach(event => {
+        eventsHtml += `<span class="timeline-node" data-person="${escapeHtml(event)}" style="display:inline-flex; background:#e9e9ef; padding:4px 10px; border-radius:20px; font-size:13px; color:#61A2DA; cursor:pointer; margin-right:8px; margin-bottom:4px;">📅 ${escapeHtml(event)}</span>`;
     });
+    contentHtml += `<div style="margin: 8px 0;"><div class="full-text">${eventsHtml}</div></div>`;
 }
-// 收缩/展开函数
-window.toggleCollapsible = function(id) {
-    const content = document.getElementById(id);
-    const header = content?.previousElementSibling;
-    const arrow = header?.querySelector('.collapse-arrow');
-    if (content) {
-        if (content.style.display === 'none') {
-            content.style.display = 'block';
-            if (arrow) arrow.textContent = '▼';
-        } else {
-            content.style.display = 'none';
-            if (arrow) arrow.textContent = '▶';
+            if (r.supplement && r.supplement !== '<p><br></p>') {
+                const supId = 'sup_' + r.id;
+                contentHtml += `<div class="collapsible-box"><div class="collapsible-header" onclick="toggleCollapsible('${supId}')"><span class="collapse-arrow">▶</span> ⭐ 历史评价</div><div id="${supId}" class="collapsible-content" style="display:none;"><div class="full-text">${r.supplement}</div></div></div>`;
+            }
+
+            // 相关人物显示
+            if (r.relatedPersons && r.relatedPersons.length > 0) {
+                let personsHtml = '';
+                r.relatedPersons.forEach(item => {
+                    const personName = typeof item === 'string' ? item : item.name;
+                    const relation = typeof item === 'string' ? '' : item.relation;
+                    const displayText = relation ? `${relation} ${personName}` : personName;
+                    personsHtml += `<span class="related-tag-clickable" data-person="${escapeHtml(personName)}" style="display:inline-flex; background:#e9e9ef; padding:4px 10px; border-radius:20px; font-size:13px; color:#61A2DA; cursor:pointer; margin-right:8px; margin-bottom:4px;">${escapeHtml(displayText)}</span>`;
+                });
+                contentHtml += `<div style="margin: 8px 0;"><div class="full-text">${personsHtml}</div></div>`;
+            }
+
+
+
+            // 时代线横线显示（按顺序）- 放在相关人物后面
+if (r.timeline && r.timeline.length > 0) {
+    let timelineHtml = `
+        <div class="timeline-horizontal">
+            <div class="timeline-horizontal-title">时代线</div>
+            <div class="timeline-track">
+                <div class="timeline-line"></div>
+    `;
+    r.timeline.forEach(person => {
+        timelineHtml += `
+            <div class="timeline-node" data-person="${escapeHtml(person)}">
+                <div class="timeline-dot"></div>
+                <div class="timeline-label">${escapeHtml(person)}</div>
+            </div>
+        `;
+    });
+    timelineHtml += `</div></div>`;
+    contentHtml += timelineHtml;
+}
+            contentHtml += '</div>';
+            card.innerHTML = `<div class="record-header"><span class="record-title">${escapeHtml(r.chapter)}</span><div class="record-header-right"><span class="record-meta">${new Date(r.updatedAt).toLocaleDateString()}</span><button class="delete-icon" data-id="${r.id}" title="删除">×</button></div></div>${contentHtml}`;
+            container.appendChild(card);
+        });
+        document.querySelectorAll('.original-box').forEach(box => { box.addEventListener('click', (e) => { e.stopPropagation(); const id = parseInt(box.dataset.id); openEditModal(id); }); });
+        document.querySelectorAll('.delete-icon').forEach(btn => { btn.addEventListener('click', (e) => { e.stopPropagation(); if(confirm('删除这条笔记？')) { const id = parseInt(btn.dataset.id); notes = notes.filter(n => n.id !== id); saveNotes(); renderRecords(); showMsg('已删除'); } }); });
+        bindRelatedPersonClicks();
+    }
+
+    window.toggleCollapsible = function(id) {
+        const content = document.getElementById(id);
+        const header = content?.previousElementSibling;
+        const arrow = header?.querySelector('.collapse-arrow');
+        if (content) {
+            if (content.style.display === 'none') { content.style.display = 'block'; if (arrow) arrow.textContent = '▼'; }
+            else { content.style.display = 'none'; if (arrow) arrow.textContent = '▶'; }
         }
     }
+
+    function bindRelatedPersonClicks() {
+        document.querySelectorAll('.related-tag-clickable').forEach(tag => {
+            tag.removeEventListener('click', window._relatedClickHandler);
+            const handler = (e) => {
+                e.stopPropagation();
+                const personName = tag.dataset.person;
+                if (personName) {
+                    const leaves = getAllLeafNodes(getCurrentTree());
+                    const exists = leaves.find(l => l.name === personName);
+                    if (exists) {
+                        currentChapter = personName;
+                        saveCurrent();
+                        renderTree();
+                        renderRecords();
+                        showMsg(`切换到: ${personName}`);
+                    } else {
+                        showMsg(`人物"${personName}"暂未创建，请先在目录中添加`);
+                    }
+                }
+            };
+            tag.addEventListener('click', handler);
+            tag._relatedClickHandler = handler;
+        });
+    // 👇 新增：时代线节点点击跳转
+    document.querySelectorAll('.timeline-node').forEach(node => {
+        node.removeEventListener('click', window._timelineClickHandler);
+        const handler = (e) => {
+            e.stopPropagation();
+            const personName = node.dataset.person;
+            if (personName) {
+                const leaves = getAllLeafNodes(getCurrentTree());
+                const exists = leaves.find(l => l.name === personName);
+                if (exists) {
+                    currentChapter = personName;
+                    saveCurrent();
+                    renderTree();
+                    renderRecords();
+                    showMsg(`切换到: ${personName}`);
+                } else {
+                    showMsg(`人物"${personName}"暂未创建`);
+                }
+            }
+        };
+        node.addEventListener('click', handler);
+        node._timelineClickHandler = handler;
+    });
 }
-
-
-
-
-
-
-function openAddModal() { 
-    editingId = null; 
-    resetQuill(); 
     
-    // 设置原文默认字号 18px、行距 1.8
-    setTimeout(() => {
-        if (quillOriginal) {
-            quillOriginal.format('size', '18px');
-            quillOriginal.format('line-height', '1.8');
+
+
+
+
+    function renderRelatedTags() {
+        const container = document.getElementById('relatedPersonsContainer');
+        if (!container) return;
+        container.innerHTML = '';
+        currentRelatedPersons.forEach((item, idx) => {
+            const tag = document.createElement('span');
+            tag.className = 'related-tag';
+            const displayText = item.relation ? `${item.relation} ${escapeHtml(item.name)}` : escapeHtml(item.name);
+            tag.innerHTML = `${displayText}<span class="remove-tag" data-idx="${idx}">×</span>`;
+            tag.querySelector('.remove-tag').addEventListener('click', (e) => {
+                e.stopPropagation();
+                currentRelatedPersons.splice(idx, 1);
+                renderRelatedTags();
+            });
+            container.appendChild(tag);
+        });
+    }
+
+    function addRelatedPerson() {
+    const input = document.getElementById('relatedPersonInput');
+    const name = input.value.trim();
+    const relationSelect = document.getElementById('relationTypeSelect');
+    const relation = relationSelect ? relationSelect.value : '🔗 其他';
+    
+    if (!name) return;
+    
+    // 检查当前笔记中是否已添加过该人物
+    if (currentRelatedPersons.some(item => item.name === name)) {
+        showMsg(`"${name}" 已经添加过了`);
+        input.value = '';
+        return;
+    }
+    
+    // ✅ 检查这个人是否已经在目录中存在（任何位置）
+    const currentTree = getCurrentTree();
+    
+    function findPersonInTree(personName, tree) {
+        for (let node of tree) {
+            if (node.name === personName) {
+                return true;
+            }
+            if (node.children && node.children.length > 0) {
+                if (findPersonInTree(personName, node.children)) return true;
+            }
         }
-    }, 100);
+        return false;
+    }
     
-    document.getElementById('modalTitle').innerText = '笔记'; 
-    document.getElementById('noteModal').classList.add('active'); 
+    const personExists = findPersonInTree(name, currentTree);
+    
+    if (!personExists) {
+        // 人不存在于目录，才自动添加到当前节点的下一级
+        function findNode(nodeName, tree) {
+            for (let node of tree) {
+                if (node.name === nodeName) return node;
+                if (node.children && node.children.length > 0) {
+                    const found = findNode(nodeName, node.children);
+                    if (found) return found;
+                }
+            }
+            return null;
+        }
+        
+        const currentNode = findNode(currentChapter, currentTree);
+        
+        if (currentNode) {
+            if (!currentNode.children) currentNode.children = [];
+            if (!currentNode.children.some(child => child.name === name)) {
+                currentNode.children.push({ 
+                    id: genId(), 
+                    name: name, 
+                    children: [] 
+                });
+                saveTrees();
+                renderTree();
+                showMsg(`目录中不存在“${name}”，已添加到“${currentChapter}”下方`);
+            }
+        } else {
+            showMsg(`当前节点“${currentChapter}”不存在`);
+        }
+    } else {
+        showMsg(`“${name}”已存在于目录中，直接添加为相关人物`);
+    }
+    
+    // 只添加到当前笔记的相关人物列表
+    currentRelatedPersons.push({ name: name, relation: relation });
+    renderRelatedTags();
+    input.value = '';
+}
+  
+function renderTimelineTags() {
+    const container = document.getElementById('timelineContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    currentTimeline.forEach((item, idx) => {
+        const tag = document.createElement('span');
+        tag.className = 'timeline-tag';
+        tag.innerHTML = `${escapeHtml(item)}<span class="remove-timeline" data-idx="${idx}">×</span>`;
+        tag.querySelector('.remove-timeline').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentTimeline.splice(idx, 1);
+            renderTimelineTags();
+        });
+        container.appendChild(tag);
+    });
 }
 
-function openEditModal(id) { const r = notes.find(n => n.id === id); if(!r) return; editingId = id; setQuill(r); document.getElementById('modalTitle').innerText = '编辑笔记'; document.getElementById('noteModal').classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); editingId = null; }
+function addTimelineItem() {
+    const input = document.getElementById('timelineInput');
+    const name = input.value.trim();
+    if (!name) return;
+    if (currentTimeline.includes(name)) {
+        showMsg(`"${name}" 已经添加过了`);
+        input.value = '';
+        return;
+    }
+    currentTimeline.push(name);
+    renderTimelineTags();
+    input.value = '';
+}
+
+
+function renderRelatedEvents() {
+    const container = document.getElementById('relatedEventsContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    currentRelatedEvents.forEach((event, idx) => {
+        const tag = document.createElement('span');
+        tag.className = 'event-tag';
+        tag.innerHTML = `${escapeHtml(event)}<span class="remove-event" data-idx="${idx}">×</span>`;
+        tag.querySelector('.remove-event').addEventListener('click', (e) => {
+            e.stopPropagation();
+            currentRelatedEvents.splice(idx, 1);
+            renderRelatedEvents();
+        });
+        container.appendChild(tag);
+    });
+}
+
+function addRelatedEvent() {
+    const input = document.getElementById('relatedEventInput');
+    const name = input.value.trim();
+    if (!name) return;
+    
+    if (currentRelatedEvents.includes(name)) {
+        showMsg(`"${name}" 已经添加过了`);
+        input.value = '';
+        return;
+    }
+    
+    // 自动在目录中创建该事件（添加到当前朝代下的"事件"分类）
+    const currentTree = getCurrentTree();
+    
+    // 查找当前朝代（当前节点可能是朝代、皇帝、名人、事件）
+    function findDynastyNode(nodeName, tree) {
+        for (let node of tree) {
+            if (node.name === nodeName) {
+                return node;
+            }
+            if (node.children && node.children.length > 0) {
+                const found = findDynastyNode(nodeName, node.children);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
+    
+    // 查找当前朝代下的"事件"分类
+    function findEventsNode(dynastyNode) {
+        if (!dynastyNode.children) return null;
+        for (let child of dynastyNode.children) {
+            if (child.name === "事件") {
+                return child;
+            }
+        }
+        return null;
+    }
+    
+    const currentDynasty = findDynastyNode(currentChapter, currentTree);
+    
+    if (currentDynasty) {
+        let eventsNode = findEventsNode(currentDynasty);
+        if (!eventsNode) {
+            // 如果不存在"事件"分类，创建它
+            eventsNode = { id: genId(), name: "事件", children: [] };
+            if (!currentDynasty.children) currentDynasty.children = [];
+            currentDynasty.children.push(eventsNode);
+        }
+        
+        // 检查事件是否已存在
+        if (!eventsNode.children.some(e => e.name === name)) {
+            eventsNode.children.push({ id: genId(), name: name, children: [] });
+            saveTrees();
+            renderTree();
+            showMsg(`已在“${currentDynasty.name}”的“事件”下创建“${name}”`);
+        } else {
+            showMsg(`事件“${name}”已存在于目录中`);
+        }
+    } else {
+        showMsg(`无法找到当前朝代`);
+    }
+    
+    currentRelatedEvents.push(name);
+    renderRelatedEvents();
+    input.value = '';
+}
+
+function openAddModal() {
+    editingId = null;
+    resetQuill();
+    currentRelatedPersons = [];
+    currentTimeline = [];
+    currentRelatedEvents = [];  // 清空相关事件
+    renderRelatedTags();
+    renderTimelineTags();
+    renderRelatedEvents();      // 渲染相关事件
+    document.getElementById('modalTitle').innerText = '人物笔记';
+    document.getElementById('noteModal').classList.add('active');
+}
+function openEditModal(id) {
+    const r = notes.find(n => n.id === id);
+    if (!r) return;
+    editingId = id;
+    
+    let originalContent = r.original || '';
+    if (r.notes && r.notes !== '<p><br></p>' && (!r.original || r.original === '<p><br></p>')) {
+        originalContent = r.notes;
+    }
+    
+    if (quillOriginal) quillOriginal.root.innerHTML = originalContent;
+    if (quillSupplement) quillSupplement.root.innerHTML = r.supplement || '';
+    
+    if (r.relatedPersons && r.relatedPersons.length > 0 && typeof r.relatedPersons[0] === 'string') {
+        currentRelatedPersons = r.relatedPersons.map(name => ({ name: name, relation: '其他' }));
+    } else {
+        currentRelatedPersons = r.relatedPersons || [];
+    }
+    currentTimeline = r.timeline || [];
+    currentRelatedEvents = r.relatedEvents || [];  // 加载相关事件
+    renderRelatedTags();
+    renderTimelineTags();
+    renderRelatedEvents();      // 渲染相关事件
+    document.getElementById('modalTitle').innerText = '编辑笔记';
+    document.getElementById('noteModal').classList.add('active');
+}
+
+function closeModal(id) {
+        document.getElementById(id).classList.remove('active');
+        editingId = null;
+        currentRelatedPersons = [];
+        renderRelatedTags();
+    }
+
 
 function resetQuill() { 
-    quillOriginal.root.innerHTML = ''; 
-    quillNotes.root.innerHTML = ''; 
-    quillSupplement.root.innerHTML = ''; 
-    quillTranslation.root.innerHTML = ''; 
-    
-    // 重新设置原文编辑器默认样式
-    quillOriginal.root.style.fontSize = '18px';
-    quillOriginal.root.style.lineHeight = '1.8';
+    if(quillOriginal) quillOriginal.root.innerHTML = ''; 
+    if(quillSupplement) quillSupplement.root.innerHTML = ''; 
 }
+   
 
-function setQuill(r) { quillOriginal.root.innerHTML = r.original || ''; quillNotes.root.innerHTML = r.notes || ''; quillSupplement.root.innerHTML = r.supplement || ''; quillTranslation.root.innerHTML = r.translation || ''; }
-    function getQuill() { return { original: quillOriginal.root.innerHTML, notes: quillNotes.root.innerHTML, supplement: quillSupplement.root.innerHTML, translation: quillTranslation.root.innerHTML }; }
-    function saveNote() {
-        const { original, notes: nt, supplement, translation } = getQuill();
-        const now = new Date().toISOString();
-        if (editingId) {
-            const idx = notes.findIndex(n => n.id === editingId);
-            if (idx !== -1) notes[idx] = { ...notes[idx], original, notes: nt, supplement, translation, updatedAt: now };
-        } else notes.push({ id: Date.now(), classic: currentClassic, chapter: currentChapter, original, notes: nt, supplement, translation, createdAt: now, updatedAt: now });
-        saveNotes(); renderRecords(); closeModal('noteModal'); showMsg('已保存');
+function setQuill(r) { 
+    if(quillOriginal) quillOriginal.root.innerHTML = r.original || ''; 
+    if(quillSupplement) quillSupplement.root.innerHTML = r.supplement || ''; 
+}
+function getQuill() { 
+    return { 
+        original: quillOriginal?.root.innerHTML || '', 
+        supplement: quillSupplement?.root.innerHTML || ''
+    }; 
+}
+   
+  function saveNote() {
+    const original = quillOriginal?.root.innerHTML || '';
+    const supplement = quillSupplement?.root.innerHTML || '';
+    const now = new Date().toISOString();
+    const relatedPersons = [...currentRelatedPersons];
+    const timeline = [...currentTimeline];
+    const relatedEvents = [...currentRelatedEvents];  // 保存相关事件
+    if (editingId) {
+        const idx = notes.findIndex(n => n.id === editingId);
+        if (idx !== -1) notes[idx] = { ...notes[idx], original, supplement, relatedPersons, timeline, relatedEvents, updatedAt: now };
+    } else {
+        notes.push({ 
+            id: Date.now(), 
+            classic: currentClassic, 
+            chapter: currentChapter, 
+            original, 
+            supplement, 
+            relatedPersons,
+            timeline,
+            relatedEvents,
+            createdAt: now, 
+            updatedAt: now 
+        });
     }
-
-    function renderCatalogTree() { const container = document.getElementById('catalogTreeList'); if(!container) return; container.innerHTML = ''; getCurrentTree().forEach(node => renderCatalogNode(container, node, 1)); }
+    saveNotes();
+    renderRecords();
+    closeModal('noteModal');
+    showMsg('笔记已保存');
+}
+function renderCatalogTree() { const container = document.getElementById('catalogTreeList'); if(!container) return; container.innerHTML = ''; getCurrentTree().forEach(node => renderCatalogNode(container, node, 1)); }
     function renderCatalogNode(parent, node, level) {
         const div = document.createElement('div'); div.className = 'edit-tree-item';
         const hasChildren = node.children?.length > 0;
-        const editIcon = `<svg viewBox="0 0 512 512" width="14" height="14"><path d="M204.54,388.18a5.93,5.93,0,0,1-4.24-1.76L125.58,311.7a6,6,0,0,1,0-8.48l184-184a6,6,0,0,1,8.49,0l74.72,74.72a6,6,0,0,1,0,8.49l-184,184A6,6,0,0,1,204.54,388.18ZM138.3,307.46l66.24,66.24L380.05,198.18,313.82,132Z"/><path d="M388.54,204.18a6,6,0,0,1-4.25-1.75l-74.72-74.72a6,6,0,0,1,0-8.49l14.7-14.7a46.14,46.14,0,0,1,65.18,0l18,18a46.09,46.09,0,0,1,0,65.18l-14.7,14.7A6,6,0,0,1,388.54,204.18ZM322.3,123.46l66.24,66.24L399,179.24A34.08,34.08,0,0,0,399,131h0l-18-18a34.13,34.13,0,0,0-48.21,0Z"/><path d="M111.39,421.2a20.45,20.45,0,0,1-14.73-5.86c-6-6-7.48-15.08-4-24.38l31.58-85.58a6,6,0,0,1,9.87-2.16l74.72,74.72a6,6,0,0,1-2.16,9.87L121,419.39h0A27.94,27.94,0,0,1,111.39,421.2Zm5.49-13.06,2.08,5.62-2.08-5.62,76.79-28.34L132.2,318.33l-28.34,76.79c-1.76,4.78-1.28,9.17,1.28,11.74S112.1,409.9,116.88,408.14Z"/></svg>`;
         div.innerHTML = `<div style="flex:1; display:flex; align-items:center;">${hasChildren ? '<span class="catalog-chevron">▶</span>' : '<span style="width:20px"></span>'}<span style="margin-left:4px;">${'　'.repeat(level-1)}${escapeHtml(node.name)}</span><span style="margin-left:8px;font-size:11px;color:#8e8e93;">(${node.children?.length||0})</span></div>
-            <div class="edit-tree-actions"><button class="action-btn add-child">+</button><button class="action-btn edit-item">${editIcon}</button><button class="action-btn delete-item">×</button></div>`;
+            <div class="edit-tree-actions"><button class="action-btn add-child">+</button><button class="action-btn edit-item">✏️</button><button class="action-btn delete-item">×</button></div>`;
         const childrenDiv = document.createElement('div'); childrenDiv.className = 'catalog-children'; childrenDiv.style.display = 'none';
         if (hasChildren) node.children.forEach(c => renderCatalogNode(childrenDiv, c, level + 1));
         const chev = div.querySelector('.catalog-chevron');
@@ -1081,56 +1799,34 @@ function setQuill(r) { quillOriginal.root.innerHTML = r.original || ''; quillNot
         div.querySelector('.delete-item')?.addEventListener('click', (e) => { e.stopPropagation(); deleteNodeById(node.id); });
         parent.appendChild(div); parent.appendChild(childrenDiv);
     }
-    function addChild(pid) { const name = prompt('输入名称:'); if(!name) return; const find = (arr) => { for(let n of arr) { if(n.id === pid) { if(!n.children) n.children = []; n.children.push({ id: genId(), name, children: [] }); return true; } if(n.children && find(n.children)) return true; } return false; }; find(getCurrentTree()); saveTrees(); renderCatalogTree(); renderTree(); showMsg(`已添加: ${name}`); }
+    function addChild(pid) { const name = prompt('输入人物名称:'); if(!name) return; const find = (arr) => { for(let n of arr) { if(n.id === pid) { if(!n.children) n.children = []; n.children.push({ id: genId(), name, children: [] }); return true; } if(n.children && find(n.children)) return true; } return false; }; find(getCurrentTree()); saveTrees(); renderCatalogTree(); renderTree(); showMsg(`已添加人物: ${name}`); }
     function editNode(id, old) { const newName = prompt('修改名称:', old); if(!newName || newName===old) return; const find = (arr) => { for(let n of arr) { if(n.id === id) { n.name = newName; return true; } if(n.children && find(n.children)) return true; } return false; }; find(getCurrentTree()); if(currentChapter === old) currentChapter = newName; saveTrees(); renderCatalogTree(); renderTree(); renderRecords(); showMsg(`已重命名`); }
     function deleteNodeById(id) { if(!confirm('删除此项及其子项？')) return; const remove = (arr) => { const idx = arr.findIndex(n => n.id === id); if(idx !== -1) { arr.splice(idx,1); return true; } for(let n of arr) if(n.children && remove(n.children)) return true; return false; }; remove(getCurrentTree()); const leaves = getAllLeafNodes(getCurrentTree()); if(leaves.length && !leaves.find(l=>l.name===currentChapter)) currentChapter = leaves[0]?.name||''; saveTrees(); renderCatalogTree(); renderTree(); renderRecords(); showMsg('已删除'); }
-    function addRoot() { const name = document.getElementById('newRootName').value.trim(); if(!name) return; getCurrentTree().push({ id: genId(), name, children: [] }); saveTrees(); renderCatalogTree(); renderTree(); document.getElementById('newRootName').value = ''; showMsg(`已添加: ${name}`); }
+    function addRoot() { const name = document.getElementById('newRootName').value.trim(); if(!name) return; getCurrentTree().push({ id: genId(), name, children: [] }); saveTrees(); renderCatalogTree(); renderTree(); document.getElementById('newRootName').value = ''; showMsg(`已添加时期: ${name}`); }
 
-    function switchClassic(type) { if(type === currentClassic) return; currentClassic = type; const leaves = getAllLeafNodes(getCurrentTree()); currentChapter = leaves[0]?.name || ''; saveCurrent(); updateClassicUI(); renderTree(); renderRecords(); showMsg(`切换到${type}`); }
+    function switchClassic(type) { if(type === currentClassic) return; currentClassic = type; const leaves = getAllLeafNodes(getCurrentTree()); currentChapter = leaves[0]?.name || ''; saveCurrent(); updateClassicUI(); renderTree(); renderRecords(); showMsg(`切换到${type === 'china' ? '中国历史' : '世界历史'}`); }
     function updateClassicUI() { document.querySelectorAll('.classic-btn').forEach(btn => { if(btn.dataset.classic === currentClassic) btn.classList.add('active'); else btn.classList.remove('active'); }); }
-function initQuill() {
-    // ========== 自定义字号 ==========
-    const Size = Quill.import('attributors/style/size');
-    Size.whitelist = ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px'];
-    Quill.register(Size, true);
-
-    // ========== 自定义行距 ==========
-    const LineHeightStyle = Quill.import('attributors/style/line-height');
-    if (LineHeightStyle) {
-        LineHeightStyle.whitelist = ['1.2', '1.4', '1.6', '1.8', '2.0', '2.5'];
-        Quill.register(LineHeightStyle, true);
-    }
-
-    const toolbarOptions = [
-        [{ 'size': ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px'] }],
-        [{ 'line-height': ['1.2', '1.4', '1.6', '1.8', '2.0', '2.5'] }],
-        ['bold', 'italic', 'underline'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-        ['clean']
-    ];
-
-    const config = {
-        theme: 'snow',
-        modules: { toolbar: toolbarOptions }
-    };
-
+    
+    function initQuill() {
+    const toolbarOptions = [[{ 'size': ['12px', '14px', '16px', '18px', '20px', '24px', '28px', '32px'] }], ['bold', 'italic', 'underline'], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['clean']];
+    const config = { theme: 'snow', modules: { toolbar: toolbarOptions } };
     quillOriginal = new Quill('#editorOriginal', config);
-    quillNotes = new Quill('#editorNotes', config);
     quillSupplement = new Quill('#editorSupplement', config);
-    quillTranslation = new Quill('#editorTranslation', config);
-
-    // ========== 设置原文编辑器默认字号 18px、行距 1.8 ==========
-    quillOriginal.root.style.fontSize = '18px';
-    quillOriginal.root.style.lineHeight = '1.8';
 }
-
-
-function showMsg(msg) { const d = document.getElementById('statusMsg'); d.innerText = msg; setTimeout(() => { if(d) d.innerText = ''; }, 2000); }
-
+    function showMsg(msg) { const d = document.getElementById('statusMsg'); d.innerText = msg; setTimeout(() => { if(d) d.innerText = ''; }, 2000); }
+    
     function bindEvents() {
+        document.getElementById('addRelatedEventBtn')?.addEventListener('click', addRelatedEvent);
+document.getElementById('relatedEventInput')?.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') addRelatedEvent();
+});
+        document.getElementById('addRelatedPersonBtn')?.addEventListener('click', addRelatedPerson);
+          // 👇 添加时代线事件
+    document.getElementById('addTimelineBtn')?.addEventListener('click', addTimelineItem);
+    document.getElementById('timelineInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') addTimelineItem(); });
+        document.getElementById('relatedPersonInput')?.addEventListener('keypress', (e) => { if (e.key === 'Enter') addRelatedPerson(); });
         document.getElementById('openAddModalBtn').addEventListener('click', openAddModal);
         document.getElementById('closeModalBtn').addEventListener('click', () => closeModal('noteModal'));
-        
         document.getElementById('modalConfirmBtn').addEventListener('click', saveNote);
         document.getElementById('editCatalogBtn').addEventListener('click', () => { renderCatalogTree(); document.getElementById('catalogModal').classList.add('active'); });
         document.getElementById('closeCatalogBtn').addEventListener('click', () => closeModal('catalogModal'));
@@ -1139,99 +1835,50 @@ function showMsg(msg) { const d = document.getElementById('statusMsg'); d.innerT
         document.getElementById('closeSettingsBtn').addEventListener('click', () => closeModal('settingsModal'));
         document.querySelectorAll('.classic-btn').forEach(btn => btn.addEventListener('click', () => switchClassic(btn.dataset.classic)));
         document.getElementById('saveToGistBtn')?.addEventListener('click', saveToGist);
-document.getElementById('loadFromGistBtn')?.addEventListener('click', loadFromGist);
-
+        document.getElementById('loadFromGistBtn')?.addEventListener('click', loadFromGist);
     }
 
-
-
-    // ==================== Gist 同步功能 ====================
-async function saveToGist() {
-    const token = document.getElementById('githubToken').value;
-    const gistId = document.getElementById('gistIdInput').value;
+    async function saveToGist() {
+        const token = document.getElementById('githubToken').value, gistId = document.getElementById('gistIdInput').value;
+        if (!token || !gistId) { showSyncStatus('请填写 Token 和 Gist ID', 'error'); return; }
+        const backupData = { version: '1.0', backupTime: new Date().toISOString(), notes, trees };
+        showSyncStatus('正在保存...', 'info');
+        try {
+            const getRes = await fetch(`https://api.github.com/gists/${gistId}`, { headers: { 'Authorization': `token ${token}` } });
+            if (!getRes.ok) throw new Error('获取失败');
+            const gistData = await getRes.json();
+            const filename = Object.keys(gistData.files)[0] || 'history_backup.json';
+            const updateRes = await fetch(`https://api.github.com/gists/${gistId}`, { method: 'PATCH', headers: { 'Authorization': `token ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ files: { [filename]: { content: JSON.stringify(backupData, null, 2) } } }) });
+            if (!updateRes.ok) throw new Error('更新失败');
+            showSyncStatus('✅ 同步成功', 'success');
+        } catch (err) { showSyncStatus('❌ 失败: ' + err.message, 'error'); }
+    }
     
-    if (!token) { showSyncStatus('请输入 GitHub Token', 'error'); return; }
-    if (!gistId) { showSyncStatus('请输入 Gist ID', 'error'); return; }
-
-    const backupData = {
-        version: '1.0',
-        backupTime: new Date().toISOString(),
-        notes: notes,
-        trees: trees
-    };
-    const content = JSON.stringify(backupData, null, 2);
-
-    showSyncStatus('正在保存到 Gist...', 'info');
-
-    try {
-        const getRes = await fetch(`https://api.github.com/gists/${gistId}`, {
-            headers: { 'Authorization': `token ${token}` }
-        });
-        if (!getRes.ok) throw new Error(`获取失败: ${getRes.status}`);
-        const gistData = await getRes.json();
-        const filename = Object.keys(gistData.files)[0] || 'yanxuelu_backup.json';
-        
-        const updateRes = await fetch(`https://api.github.com/gists/${gistId}`, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `token ${token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                files: { [filename]: { content: content } }
-            })
-        });
-        if (!updateRes.ok) throw new Error(`更新失败: ${updateRes.status}`);
-        
-        showSyncStatus('✅ 同步成功！数据已保存到 Gist', 'success');
-        localStorage.setItem('gistId', gistId);
-    } catch (err) {
-        console.error(err);
-        showSyncStatus('❌ 同步失败: ' + err.message, 'error');
+    async function loadFromGist() {
+        const token = document.getElementById('githubToken').value, gistId = document.getElementById('gistIdInput').value;
+        if (!token || !gistId) { showSyncStatus('请填写 Token 和 Gist ID', 'error'); return; }
+        showSyncStatus('正在恢复...', 'info');
+        try {
+            const res = await fetch(`https://api.github.com/gists/${gistId}`, { headers: { 'Authorization': `token ${token}` } });
+            if (!res.ok) throw new Error('获取失败');
+            const gistData = await res.json();
+            const firstFile = gistData.files[Object.keys(gistData.files)[0]];
+            if (!firstFile?.content) throw new Error('无数据');
+            const backupData = JSON.parse(firstFile.content);
+            if (backupData.notes) { notes = backupData.notes; saveNotes(); }
+            if (backupData.trees) { trees = backupData.trees; saveTrees(); }
+            renderTree(); renderRecords();
+            showSyncStatus('✅ 恢复成功', 'success');
+        } catch (err) { showSyncStatus('❌ 失败: ' + err.message, 'error'); }
     }
-}
-
-async function loadFromGist() {
-    const token = document.getElementById('githubToken').value;
-    const gistId = document.getElementById('gistIdInput').value;
     
-    if (!token) { showSyncStatus('请输入 GitHub Token', 'error'); return; }
-    if (!gistId) { showSyncStatus('请输入 Gist ID', 'error'); return; }
+    function showSyncStatus(msg, type) { const div = document.getElementById('syncStatus'); if(div) { div.innerText = msg; div.style.color = type === 'error' ? '#ff3b30' : (type === 'success' ? '#2e7d32' : '#8e8e93'); } setTimeout(() => { if(div) div.innerText = ''; }, 3000); }
 
-    showSyncStatus('正在从 Gist 恢复...', 'info');
-
-    try {
-        const res = await fetch(`https://api.github.com/gists/${gistId}`, {
-            headers: { 'Authorization': `token ${token}` }
-        });
-        if (!res.ok) throw new Error(`获取失败: ${res.status}`);
-        const gistData = await res.json();
-        const firstFile = gistData.files[Object.keys(gistData.files)[0]];
-        if (!firstFile || !firstFile.content) throw new Error('Gist 中没有数据文件');
-        
-        const backupData = JSON.parse(firstFile.content);
-        
-        if (backupData.notes) {
-            notes = backupData.notes;
-            saveNotes();
-        }
-        if (backupData.trees) {
-            trees = backupData.trees;
-            saveTrees();
-        }
-        
-        renderTree();
-        renderRecords();
-        showSyncStatus('✅ 恢复成功！数据已从 Gist 加载', 'success');
-    } catch (err) {
-        console.error(err);
-        showSyncStatus('❌ 恢复失败: ' + err.message, 'error');
-    }
-}
-
-
-    function init() { loadTrees(); loadNotes(); loadCurrent(); initQuill(); bindEvents(); updateClassicUI(); renderTree(); renderRecords(); showMsg('就绪'); }
+    function init() { loadTrees(); loadNotes(); loadCurrent(); initQuill(); bindEvents(); updateClassicUI(); renderTree(); renderRecords(); showMsg('历史文库已就绪'); }
     init();
 </script>
+
+
+
 </body>
 </html>
