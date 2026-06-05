@@ -489,9 +489,9 @@
 }
 
 .full-text li {
-    list-style: none;
-    margin-left: 0 !important;
-    padding-left: 24px !important;  /* 统一左内边距 */
+    
+    margin-left: 20px !important;
+    padding-left: 0 !important;
     position: relative;
 }
 
@@ -788,7 +788,23 @@ body {
 }
 
 
+/* 二级及更深缩进 - 显示圆点 */
+.full-text li.ql-indent-1,
+.full-text li.ql-indent-2,
+.full-text li.ql-indent-3,
+.full-text li.ql-indent-4,
+.full-text li.ql-indent-5 {
+    list-style: disc !important;
+    margin-left: 44px !important;
+    padding-left: 4px !important;
+}
 
+/* 但如果二级缩进也有子项（三级缩进），则不显示圆点，显示折叠按钮 */
+.full-text li.ql-indent-1.has-fold-btn,
+.full-text li.ql-indent-2.has-fold-btn,
+.full-text li.ql-indent-3.has-fold-btn {
+    list-style: none !important;
+}
 
 
 /* 折叠按钮样式 - 在原圆点位置 */
@@ -796,12 +812,12 @@ body {
     cursor: pointer;
     display: inline-block;
     width: 20px;
-    color: #61A2DA;
+    color: #000000!important;
     font-size: 12px;
     user-select: none;
     text-align: center;
     margin-right: 6px;
-    margin-left: -25px;  /* 向左偏移，占据圆点位置 */
+    margin-left: -22px;  /* 向左偏移，占据圆点位置 */
 }
 .fold-toggle:hover {
     color: #ff9500;
@@ -814,7 +830,37 @@ body {
     padding-left: 0 !important;
     position: relative;
 }
+/* 子列表样式 - 支持多级缩进 */
+.full-text li ul,
+.full-text li ol {
+    margin-left: 24px !important;
+    padding-left: 0 !important;
+}
 
+/* 或者直接通过缩进级别控制 */
+.full-text li.ql-indent-0 {
+    margin-left: 20px !important;
+}
+
+.full-text li.ql-indent-1 {
+    margin-left: 44px !important;
+}
+
+.full-text li.ql-indent-2 {
+    margin-left: 68px !important;
+}
+
+.full-text li.ql-indent-3 {
+    margin-left: 92px !important;
+}
+
+.full-text li.ql-indent-4 {
+    margin-left: 116px !important;
+}
+
+.full-text li.ql-indent-5 {
+    margin-left: 140px !important;
+}
 /* 去掉原来的圆点 */
 .full-text li:before {
     content: none !important;
@@ -865,7 +911,15 @@ body {
 .level-4 { margin-left: 96px; }
 .level-5 { margin-left: 120px; }
 
+/* 有折叠按钮的项 - 隐藏圆点 */
+.full-text li.has-fold-btn {
+    list-style: none !important;
+}
 
+/* 没有折叠按钮的项 - 显示圆点 */
+.full-text li:not(.has-fold-btn) {
+    list-style: disc !important;
+}
 
     </style>
 </head>
@@ -1903,89 +1957,116 @@ if (currentNote.content && currentNote.content !== '<p><br></p>') {
     contentHtml += '</div></div>';
     container.innerHTML = contentHtml;
     
-    // ========== 缩进折叠功能（支持 ql-indent 类） ==========
-    // ========== 缩进折叠功能（支持多级缩进） ==========
-    setTimeout(() => {
-        const container = document.querySelector('.full-text');
-        if (!container) {
-            console.log('未找到 .full-text 容器');
-            return;
-        }
-        
-        // 获取所有列表项
-        const allItems = Array.from(container.querySelectorAll('li'));
-        if (allItems.length === 0) {
-            console.log('没有找到列表项');
-            return;
-        }
-        
-        console.log('找到列表项:', allItems.length);
-        
-        // 获取每个项的缩进级别
-        const itemsWithIndent = allItems.map(li => {
-            let indent = 0;
-            for (let cls of li.classList) {
-                if (cls.startsWith('ql-indent-')) {
-                    indent = parseInt(cls.replace('ql-indent-', ''));
-                    break;
-                }
+// 在 renderRecords() 函数中，找到这段 setTimeout 代码块，整个替换为：
+
+// ========== 大纲折叠功能（基于嵌套结构，不丢失序号） ==========
+setTimeout(() => {
+    const container = document.querySelector('.full-text');
+    if (!container) return;
+    
+    // 1. 先清理已有的折叠按钮，避免重复添加
+    container.querySelectorAll('.fold-toggle').forEach(btn => btn.remove());
+    container.querySelectorAll('li').forEach(li => {
+        li.classList.remove('has-fold-btn');
+        li.style.listStyle = '';
+        li.style.display = '';
+    });
+    
+    // 2. 收集所有 li，按缩进级别构建树形结构
+    const allLi = Array.from(container.querySelectorAll('li'));
+    if (allLi.length === 0) return;
+    
+    // 获取每个 li 的缩进级别
+    const itemsWithLevel = allLi.map(li => {
+        let level = 0;
+        for (let cls of li.classList) {
+            if (cls.startsWith('ql-indent-')) {
+                level = parseInt(cls.replace('ql-indent-', ''));
+                break;
             }
-            return { li, indent };
-        });
+        }
+        return { li, level };
+    });
+    
+    // 3. 为有子级的项添加折叠按钮，并建立父子关系
+    for (let i = 0; i < itemsWithLevel.length; i++) {
+        const current = itemsWithLevel[i];
+        let children = [];
         
-        // 为每个有子项的项添加折叠按钮
-        for (let i = 0; i < itemsWithIndent.length; i++) {
-            const current = itemsWithIndent[i];
-            const currentIndent = current.indent;
+        // 收集所有缩进级别大于当前项的子项
+        for (let j = i + 1; j < itemsWithLevel.length; j++) {
+            const next = itemsWithLevel[j];
+            if (next.level > current.level) {
+                children.push(next.li);
+            } else {
+                break;
+            }
+        }
+        
+        if (children.length > 0 && !current.li.querySelector('.fold-toggle')) {
+            // 找到合适的位置插入折叠按钮（在内容最前面）
+            const firstChild = current.li.firstChild;
+            const foldBtn = document.createElement('span');
+            foldBtn.className = 'fold-toggle';
+            foldBtn.innerHTML = '▼';
+            foldBtn.setAttribute('data-expanded', 'true');
+            foldBtn.style.cssText = 'cursor: pointer; display: inline-block; width: 20px; color: #61A2DA; font-size: 12px; user-select: none; text-align: center; margin-right: 6px;';
             
-            // 查找当前项后面有多少连续的子项（缩进级别大于当前）
-            let children = [];
-            for (let j = i + 1; j < itemsWithIndent.length; j++) {
-                const next = itemsWithIndent[j];
-                if (next.indent > currentIndent) {
-                    children.push(next.li);
+            // 插入到开头
+            if (firstChild) {
+                current.li.insertBefore(foldBtn, firstChild);
+            } else {
+                current.li.appendChild(foldBtn);
+            }
+            current.li.classList.add('has-fold-btn');
+            
+            // 存储子项信息到 DOM 属性
+            foldBtn._children = children;
+            
+            // 绑定折叠/展开事件
+            foldBtn.onclick = function(e) {
+                e.stopPropagation();
+                const isExpanded = this.getAttribute('data-expanded') === 'true';
+                const childrenLis = this._children;
+                
+                if (isExpanded) {
+                    // 折叠：隐藏所有子项
+                    childrenLis.forEach(child => child.style.display = 'none');
+                    this.innerHTML = '▶';
+                    this.setAttribute('data-expanded', 'false');
                 } else {
-                    break;  // 遇到同级或更高级别就停止
+                    // 展开：显示所有子项
+                    childrenLis.forEach(child => child.style.display = '');
+                    this.innerHTML = '▼';
+                    this.setAttribute('data-expanded', 'true');
                 }
-            }
-            
-            // 如果有子项且还没有折叠按钮
-            if (children.length > 0 && !current.li.querySelector('.fold-toggle')) {
-                // 获取第一个文本节点
-                let firstTextNode = current.li.firstChild;
-                while (firstTextNode && firstTextNode.nodeType !== Node.TEXT_NODE) {
-                    firstTextNode = firstTextNode.nextSibling;
-                }
-                if (!firstTextNode) {
-                    firstTextNode = current.li;
-                }
-                
-                const foldBtn = document.createElement('span');
-                foldBtn.className = 'fold-toggle';
-                foldBtn.innerHTML = '▼';
-                foldBtn.style.cssText = 'cursor: pointer; display: inline-block; width: 20px; color: #61A2DA; font-size: 12px; user-select: none; text-align: center; margin-right: 6px;';
-                
-                current.li.insertBefore(foldBtn, firstTextNode);
-                current.li.style.listStyle = 'none';
-                
-                let isExpanded = true;
-                foldBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    if (isExpanded) {
-                        children.forEach(child => child.style.display = 'none');
-                        foldBtn.innerHTML = '▶';
-                        isExpanded = false;
-                    } else {
-                        children.forEach(child => child.style.display = 'block');
-                        foldBtn.innerHTML = '▼';
-                        isExpanded = true;
-                    }
-                };
-                
-                console.log('已添加折叠按钮到:', current.li.textContent.substring(0, 30), '有', children.length, '个子项');
-            }
+            };
         }
-    }, 200);
+    }
+    
+    // 4. 恢复有序/无序列表的序号样式
+    allLi.forEach(li => {
+        const parent = li.parentElement;
+        const isOrderedList = parent && parent.tagName === 'OL';
+        
+        if (li.classList.contains('has-fold-btn')) {
+            // 有折叠按钮的项：隐藏浏览器默认的序号/圆点，用折叠按钮代替
+            li.style.listStyle = 'none';
+        } else {
+            // 没有折叠按钮的项：恢复原始序号/圆点
+            li.style.listStyle = '';
+            if (isOrderedList) {
+                li.style.listStyleType = 'decimal';
+            } else {
+                li.style.listStyleType = 'disc';
+            }
+            // 确保缩进正确
+            li.style.marginLeft = '';
+            li.style.paddingLeft = '';
+        }
+    });
+    
+}, 100);  
     document.querySelectorAll('.edit-icon').forEach(btn => {
         btn.addEventListener('click', (e) => {
             e.stopPropagation();
