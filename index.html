@@ -729,7 +729,7 @@
     <div id="editorOriginal" class="quill-editor"></div>
 </div>
 <div class="field-group">
-    <div class="field-label">历史评价</div>
+    <div class="field-label">评价</div>
     <div id="editorSupplement" class="quill-editor"></div>
 </div>
 
@@ -1502,11 +1502,11 @@ if (r.timeline && r.timeline.length > 0) {
         });
     }
 
-    function addRelatedPerson() {
+function addRelatedPerson() {
     const input = document.getElementById('relatedPersonInput');
     const name = input.value.trim();
     const relationSelect = document.getElementById('relationTypeSelect');
-    const relation = relationSelect ? relationSelect.value : '🔗 其他';
+    const relation = relationSelect ? relationSelect.value : '其他';
     
     if (!name) return;
     
@@ -1517,14 +1517,83 @@ if (r.timeline && r.timeline.length > 0) {
         return;
     }
     
-    // ✅ 检查这个人是否已经在目录中存在（任何位置）
+    // ========== 1. 双向关系映射 ==========
+    const reverseRelationMap = {
+        '父亲': '儿子',
+        '儿子': '父亲',
+        '母亲': '女儿',
+        '女儿': '母亲',
+        '兄弟': '兄弟',
+        '姐妹': '姐妹',
+        '配偶': '配偶',
+        '师傅': '徒弟',
+        '徒弟': '师傅',
+        '同僚': '同僚',
+        '政敌': '政敌',
+        '君主': '下属',
+        '下属': '君主',
+        '其他': '其他'
+    };
+    const reverseRelation = reverseRelationMap[relation] || '其他';
+    
+    // ========== 2. 添加到当前笔记 ==========
+    currentRelatedPersons.push({ name: name, relation: relation });
+    renderRelatedTags();
+    
+    // ========== 3. 为对方添加反向关系 ==========
+    let targetNote = notes.find(n => n.classic === currentClassic && n.chapter === name);
+    
+    if (targetNote) {
+        // 目标人物的笔记存在，添加反向关系
+        if (!targetNote.relatedPersons) targetNote.relatedPersons = [];
+        const alreadyHas = targetNote.relatedPersons.some(item => {
+            const itemName = typeof item === 'string' ? item : item.name;
+            return itemName === currentChapter;
+        });
+        if (!alreadyHas) {
+            targetNote.relatedPersons.push({ name: currentChapter, relation: reverseRelation });
+            saveNotes();
+            showMsg(`已自动为“${name}”添加反向关系：${reverseRelation} ${currentChapter}`);
+        }
+    } else {
+        // 目标人物的笔记不存在，询问是否创建
+        const createNote = confirm(`“${name}”还没有笔记，是否立即创建并自动添加反向关系？`);
+        if (createNote) {
+            const newNote = {
+                id: Date.now(),
+                classic: currentClassic,
+                chapter: name,
+                original: '',
+                supplement: '',
+                relatedPersons: [{ name: currentChapter, relation: reverseRelation }],
+                timeline: [],
+                relatedEvents: [],
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            notes.push(newNote);
+            saveNotes();
+            showMsg(`已创建“${name}”的笔记，并自动添加关系：${reverseRelation} ${currentChapter}`);
+        }
+    }
+    
+    // ========== 4. 检查目录中是否存在该人物，不存在则创建 ==========
     const currentTree = getCurrentTree();
+    
+    function findNode(nodeName, tree) {
+        for (let node of tree) {
+            if (node.name === nodeName) return node;
+            if (node.children && node.children.length > 0) {
+                const found = findNode(nodeName, node.children);
+                if (found) return found;
+            }
+        }
+        return null;
+    }
     
     function findPersonInTree(personName, tree) {
         for (let node of tree) {
-            if (node.name === personName) {
-                return true;
-            }
+            if (node.name === personName) return true;
             if (node.children && node.children.length > 0) {
                 if (findPersonInTree(personName, node.children)) return true;
             }
@@ -1532,48 +1601,21 @@ if (r.timeline && r.timeline.length > 0) {
         return false;
     }
     
-    const personExists = findPersonInTree(name, currentTree);
-    
-    if (!personExists) {
-        // 人不存在于目录，才自动添加到当前节点的下一级
-        function findNode(nodeName, tree) {
-            for (let node of tree) {
-                if (node.name === nodeName) return node;
-                if (node.children && node.children.length > 0) {
-                    const found = findNode(nodeName, node.children);
-                    if (found) return found;
-                }
-            }
-            return null;
-        }
-        
+    if (!findPersonInTree(name, currentTree)) {
         const currentNode = findNode(currentChapter, currentTree);
-        
         if (currentNode) {
             if (!currentNode.children) currentNode.children = [];
             if (!currentNode.children.some(child => child.name === name)) {
-                currentNode.children.push({ 
-                    id: genId(), 
-                    name: name, 
-                    children: [] 
-                });
+                currentNode.children.push({ id: genId(), name: name, children: [] });
                 saveTrees();
                 renderTree();
                 showMsg(`目录中不存在“${name}”，已添加到“${currentChapter}”下方`);
             }
-        } else {
-            showMsg(`当前节点“${currentChapter}”不存在`);
         }
-    } else {
-        showMsg(`“${name}”已存在于目录中，直接添加为相关人物`);
     }
     
-    // 只添加到当前笔记的相关人物列表
-    currentRelatedPersons.push({ name: name, relation: relation });
-    renderRelatedTags();
     input.value = '';
 }
-  
 function renderTimelineTags() {
     const container = document.getElementById('timelineContainer');
     if (!container) return;
@@ -1623,6 +1665,7 @@ function renderRelatedEvents() {
     });
 }
 
+
 function addRelatedEvent() {
     const input = document.getElementById('relatedEventInput');
     const name = input.value.trim();
@@ -1634,63 +1677,82 @@ function addRelatedEvent() {
         return;
     }
     
+    // 先添加到当前笔记的相关事件列表
+    currentRelatedEvents.push(name);
+    renderRelatedEvents();
+    
     // 自动在目录中创建该事件（添加到当前朝代下的"事件"分类）
     const currentTree = getCurrentTree();
     
-    // 查找当前朝代（当前节点可能是朝代、皇帝、名人、事件）
-    function findDynastyNode(nodeName, tree) {
+    // 简单查找朝代：向上找到根节点下的直接子节点
+    function findDynastyName(nodeName, tree, path = []) {
         for (let node of tree) {
             if (node.name === nodeName) {
-                return node;
+                return path.length > 0 ? path[0] : node.name;
             }
             if (node.children && node.children.length > 0) {
-                const found = findDynastyNode(nodeName, node.children);
+                const newPath = [...path, node.name];
+                const found = findDynastyName(nodeName, node.children, newPath);
                 if (found) return found;
             }
         }
         return null;
     }
     
-    // 查找当前朝代下的"事件"分类
-    function findEventsNode(dynastyNode) {
-        if (!dynastyNode.children) return null;
-        for (let child of dynastyNode.children) {
-            if (child.name === "事件") {
-                return child;
+    // 查找朝代节点
+    function findDynastyNodeByName(dynastyName, tree) {
+        for (let node of tree) {
+            if (node.name === dynastyName) {
+                return node;
             }
         }
         return null;
     }
     
-    const currentDynasty = findDynastyNode(currentChapter, currentTree);
+    const dynastyName = findDynastyName(currentChapter, currentTree);
+    console.log("找到的朝代:", dynastyName);
     
-    if (currentDynasty) {
-        let eventsNode = findEventsNode(currentDynasty);
-        if (!eventsNode) {
-            // 如果不存在"事件"分类，创建它
-            eventsNode = { id: genId(), name: "事件", children: [] };
-            if (!currentDynasty.children) currentDynasty.children = [];
-            currentDynasty.children.push(eventsNode);
-        }
+    if (dynastyName) {
+        const dynastyNode = findDynastyNodeByName(dynastyName, currentTree);
+        console.log("朝代节点:", dynastyNode);
         
-        // 检查事件是否已存在
-        if (!eventsNode.children.some(e => e.name === name)) {
-            eventsNode.children.push({ id: genId(), name: name, children: [] });
-            saveTrees();
-            renderTree();
-            showMsg(`已在“${currentDynasty.name}”的“事件”下创建“${name}”`);
+        if (dynastyNode) {
+            // 查找朝代下的"事件"分类
+            let eventsNode = null;
+            if (dynastyNode.children) {
+                eventsNode = dynastyNode.children.find(child => child.name === "事件");
+            }
+            
+            if (!eventsNode) {
+                // 如果不存在"事件"分类，创建它
+                eventsNode = { id: genId(), name: "事件", children: [] };
+                if (!dynastyNode.children) dynastyNode.children = [];
+                dynastyNode.children.push(eventsNode);
+                // 排序保持顺序
+                dynastyNode.children.sort((a, b) => {
+                    const order = { '皇帝': 1, '名人': 2, '事件': 3 };
+                    return (order[a.name] || 99) - (order[b.name] || 99);
+                });
+            }
+            
+            // 检查事件是否已存在
+            if (!eventsNode.children.some(e => e.name === name)) {
+                eventsNode.children.push({ id: genId(), name: name, children: [] });
+                saveTrees();
+                renderTree();
+                showMsg(`已在“${dynastyName}”的“事件”下创建“${name}”`);
+            } else {
+                showMsg(`事件“${name}”已存在于目录中`);
+            }
         } else {
-            showMsg(`事件“${name}”已存在于目录中`);
+            showMsg(`无法找到朝代节点“${dynastyName}”`);
         }
     } else {
-        showMsg(`无法找到当前朝代`);
+        showMsg(`无法找到当前人物“${currentChapter}”所属的朝代`);
     }
     
-    currentRelatedEvents.push(name);
-    renderRelatedEvents();
     input.value = '';
 }
-
 function openAddModal() {
     editingId = null;
     resetQuill();
